@@ -15,6 +15,7 @@ export default class AuthForm extends React.Component {
 	}
 
 	render() {
+		console.log("Hello from AuthForm.jsx");
 		return (
 			<div className={classnames({
 				AuthForm: true,
@@ -34,7 +35,7 @@ export default class AuthForm extends React.Component {
 							<form onSubmit={this.onLoginSubmit}>
 								<div>
 									<label>
-										<span>Username: </span>
+										<span>a Username: </span>
 										<input name="username"/>
 									</label>
 								</div>
