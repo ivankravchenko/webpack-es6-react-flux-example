@@ -1,38 +1,39 @@
-const webpack = require("webpack")
+const webpack = require('webpack');
+const path = require('path');
+
+var port = process.env.HOT_LOAD_PORT || 8888;
 
 module.exports = {
+	cache: true,
 	context: __dirname + "/client",
-	entry: {
-		app: "./app"
-	},
+	entry: [
+		'webpack-dev-server/client?http://localhost:12345', // WebpackDevServer host and port
+		'webpack/hot/only-dev-server',
+		'./app' // app entry point
+	],
 	output: {
-		path: __dirname + "/public",
-		publicPath: "/assets/",
+		path: __dirname + "/build/",
+		publicPath: "http://localhost:" + port + "/build/",
 		filename: "[name].bundle.js",
 		sourceMapFilename: "[file].map",
 		chunkFilename: "[id].bundle.js"
 	},
-	devServer: {
-		// https: true,
-		watch: true,
-		inline: true,
-		port: 12345,
-		contentBase: "http://localhost:12345/public"
-	},
-	devtool: "eval-source-map",
+	devtool: "eval",
 	plugins: [
 		// new webpack.optimize.UglifyJsPlugin()
+		new webpack.HotModuleReplacementPlugin(),
+		new webpack.NoErrorsPlugin()
 	],
 	module: {
 		loaders: [
 			{
 				test: /\.jsx?$/,
 				exclude: /(node_modules|bower_components)/,
-				loader: 'babel',
-				query: {stage: 0}
+				loaders: ['react-hot', 'babel-loader?stage=0'],
+				include: path.join(__dirname, '/client')
 			},
 			{
-				test: /\.css$/,
+				test: /\.css$/
 				loaders: ["style", "css"]
 			},
 		]

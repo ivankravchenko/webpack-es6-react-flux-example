@@ -1,4 +1,4 @@
-import React from "react"
+import React from 'react';
 import Router from 'react-router';
 const { Route, RouteHandler, DefaultRoute, NotFoundRoute } = Router
 
