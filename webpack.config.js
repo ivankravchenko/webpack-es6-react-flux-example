@@ -7,7 +7,7 @@ module.exports = {
 	},
 	output: {
 		path: __dirname + "/public",
-		publicPath: "http://localhost:8080/assets/",
+		publicPath: "/assets/",
 		filename: "[name].bundle.js",
 		sourceMapFilename: "[file].map",
 		chunkFilename: "[id].bundle.js"
@@ -16,9 +16,10 @@ module.exports = {
 		// https: true,
 		watch: true,
 		inline: true,
-		contentBase: __dirname + "/public"
+		port: 12345,
+		contentBase: "http://localhost:12345/public"
 	},
-	// devtool: "#cheap-module-eval-source-map",
+	devtool: "eval-source-map",
 	plugins: [
 		// new webpack.optimize.UglifyJsPlugin()
 	],
