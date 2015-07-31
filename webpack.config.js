@@ -20,7 +20,7 @@ module.exports = {
 	},
 	// devtool: "#cheap-module-eval-source-map",
 	plugins: [
-		new webpack.optimize.UglifyJsPlugin()
+		// new webpack.optimize.UglifyJsPlugin()
 	],
 	module: {
 		loaders: [
