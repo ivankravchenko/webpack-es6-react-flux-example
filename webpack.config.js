@@ -1,36 +1,38 @@
 const webpack = require('webpack');
 const path = require('path');
+const writeStats = require('./server/utils/writeStats.js');
 
 var port = process.env.HOT_LOAD_PORT || 8888;
 
 module.exports = {
-	cache: true,
 	context: __dirname + "/client",
-	entry: [
-		'webpack-dev-server/client?http://localhost:' + port, // WebpackDevServer host and port
-		'webpack/hot/only-dev-server',
-		'./app' // app entry point
-	],
+	entry: {
+		'main': [
+			'webpack-dev-server/client?http://localhost:' + port, // WebpackDevServer host and port
+			'webpack/hot/only-dev-server',
+			'./app.js' // app entry point
+		]
+	},
 	output: {
-		path: __dirname + "/build/",
+		path: __dirname + "/build",
 		publicPath: "http://localhost:" + port + "/build/",
 		filename: "[name].bundle.js",
 		sourceMapFilename: "[file].map",
 		chunkFilename: "[id].bundle.js"
 	},
-	devtool: "eval",
+	devtool: "eval-source-map",
 	plugins: [
 		// new webpack.optimize.UglifyJsPlugin()
 		new webpack.HotModuleReplacementPlugin(),
 		new webpack.NoErrorsPlugin()
 	],
+	progress: true,
 	module: {
 		loaders: [
 			{
 				test: /\.jsx?$/,
 				exclude: /(node_modules|bower_components)/,
-				loaders: ['react-hot', 'babel-loader?stage=0'],
-				include: path.join(__dirname, '/client')
+				loaders: ['react-hot', 'babel?stage=0&optional=runtime']
 			},
 			{
 				test: /\.css$/,

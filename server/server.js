@@ -82,7 +82,7 @@ server.use(function (req, res, next) {
   // In development, the compiled javascript is served by a WebpackDevServer, which lets us 'hot load' scripts in for live editing.
   if (process.env.NODE_ENV === "development") {
     var hotLoadPort = process.env.HOT_LOAD_PORT || 8888;
-    res.write('<script src="http://localhost:' + hotLoadPort + '/build/client.js" defer></script>');
+    res.write('<script src="http://localhost:' + hotLoadPort + '/build/main.bundle.js" defer></script>');
   }
 
   // In production, we just serve the pre-compiled assets from the /build directory

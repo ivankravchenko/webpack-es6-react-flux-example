@@ -7,11 +7,22 @@ import classnames from 'classnames'
 @connectToStores
 export default class AuthForm extends React.Component {
 	static getStores() {
-		return [AuthStore]
+		return [AuthStore];
 	}
 
 	static getPropsFromStores() {
-		return AuthStore.getState()
+		return AuthStore.getState();
+	}
+
+	onLoginSubmit(event) {
+		console.log('Login submit', event);
+		event.preventDefault();
+		let form = event.target;
+		AuthActions.loginAttempt(form.username.value, form.password.value);
+	}
+
+	onLogoutClick(event) {
+		AuthActions.logout()
 	}
 
 	render() {
@@ -35,7 +46,7 @@ export default class AuthForm extends React.Component {
 							<form onSubmit={this.onLoginSubmit}>
 								<div>
 									<label>
-										<span>a Username: </span>
+										<span>xUsername: </span>
 										<input name="username"/>
 									</label>
 								</div>
@@ -54,13 +65,4 @@ export default class AuthForm extends React.Component {
 		)
 	}
 
-	onLoginSubmit(event) {
-		event.preventDefault()
-		let form = event.target
-		AuthActions.loginAttempt(form.username.value, form.password.value)
-	}
-
-	onLogoutClick(event) {
-		AuthActions.logout()
-	}
 }

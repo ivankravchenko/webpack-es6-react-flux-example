@@ -5,18 +5,24 @@
 var webpack = require('webpack');
 var WebpackDevServer = require('webpack-dev-server');
 var config = require('../webpack.config');
-
+var host = process.env.HOST || 'localhost';
 var port = process.env.HOT_LOAD_PORT || 8888;
 
 new WebpackDevServer(webpack(config), {
-  contentBase: 'http://localhost:' + port,
+  contentBase: 'http://' + host + ':' + port,
   publicPath: config.output.publicPath,
   noInfo: true,
-  hot: true
-}).listen(port, 'localhost', function (err, result) {
+  hot: true,
+  inline: true,
+  lazy: false,
+  headers: {"Access-Control-Allow-Origin": "*"},
+  stats: {
+    colors: true
+  }
+}).listen(port, host, function (err, result) {
   if (err) {
     console.log(err);
   }
 
-  console.log('Hot load server listening at localhost:' + port);
+  console.log('Hot load server listening at ' + host + ':' + port);
 });
