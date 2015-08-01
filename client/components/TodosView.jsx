@@ -1,6 +1,6 @@
 import React from 'react'
-import TodosStore from '../stores/TodosStore'
-import TodosActions from '../actions/TodosActions'
+import TodosStore from 'stores/TodosStore'
+import TodosActions from 'actions/TodosActions'
 import connectToStores from 'alt/utils/connectToStores'
 
 @connectToStores

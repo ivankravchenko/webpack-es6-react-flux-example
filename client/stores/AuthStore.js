@@ -1,6 +1,6 @@
-import flux from '../flux';
+import flux from 'flux';
 import {createStore, bind} from 'alt/utils/decorators';
-import AuthActions from '../actions/AuthActions'
+import AuthActions from 'actions/AuthActions'
 
 @createStore(flux)
 export default class AuthStore {

@@ -1,4 +1,4 @@
-import flux from '../flux';
+import flux from 'flux';
 
 var lastId = 0
 
