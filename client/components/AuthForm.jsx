@@ -24,27 +24,30 @@ export default class AuthForm extends React.Component {
 				{this.props.isWaiting ? (
 					<span>Logging in...</span>
 				) : (this.props.isLoggedIn ? (
-						<div>
-							<span>Hi, {this.props.username}!</span>
-							<button onClick={this.onLogoutClick}>Logout</button>
-						</div>
+						<p>
+							Hi, {this.props.username}!&nbsp;
+							<a href="" onClick={this.onLogoutClick}>Logout</a>
+						</p>
 					) : (
 						<div>
 							{this.props.error ? <span>{this.props.error}</span> : <span></span>}
-							<form onSubmit={this.onLoginSubmit}>
-								<div>
-									<label>
-										<span>Username: </span>
+							<form onSubmit={this.onLoginSubmit} className="pure-form pure-form-aligned">
+								<fieldset>
+									<div className="pure-control-group">
+										<label>Username</label>
 										<input name="username"/>
-									</label>
-								</div>
-								<div>
-									<label>
-										<span>Password: </span>
+									</div>
+									<div className="pure-control-group">
+										<label>Password</label>
 										<input name="password" type="password"/>
-									</label>
-								</div>
-								<button>Login</button>
+									</div>
+									<div className="pure-controls">
+										<label className="pure-checkbox">
+											<input type="checkbox"/> remember me
+										</label>
+										<button type="submit" className="pure-button pure-button-primary">Login</button>
+									</div>
+								</fieldset>
 							</form>
 						</div>
 					)
@@ -60,6 +63,7 @@ export default class AuthForm extends React.Component {
 	}
 
 	onLogoutClick(event) {
+		event.preventDefault()
 		AuthActions.logout()
 	}
 }

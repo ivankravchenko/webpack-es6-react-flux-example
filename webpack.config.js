@@ -1,40 +1,45 @@
 const webpack = require("webpack")
 
+const PORT = process.env.PORT || 3000;
+
 module.exports = {
 	context: __dirname + "/client",
-	entry: {
-		app: "./app"
-	},
+	entry: [
+		"webpack-dev-server/client?http://localhost:" + PORT,
+		"webpack/hot/only-dev-server",
+		"./app"
+	],
 	output: {
 		path: __dirname + "/public",
-		publicPath: "/assets/",
+		publicPath: "/",
 		filename: "[name].bundle.js",
 		sourceMapFilename: "[file].map",
 		chunkFilename: "[id].bundle.js"
 	},
 	devServer: {
 		// https: true,
-		watch: true,
-		inline: true,
-		port: 12345,
-		contentBase: "http://localhost:12345/public"
+		port: PORT,
+		hot: true,
+		historyApiFallback: true,
+		contentBase: 'public'
 	},
-	devtool: "eval-source-map",
+	devtool: "cheap-module-eval-source-map",
 	plugins: [
-		// new webpack.optimize.UglifyJsPlugin()
+		// new webpack.optimize.UglifyJsPlugin(),
+		new webpack.HotModuleReplacementPlugin(),
+		new webpack.NoErrorsPlugin()
 	],
 	module: {
 		loaders: [
 			{
 				test: /\.jsx?$/,
 				exclude: /(node_modules|bower_components)/,
-				loader: 'babel',
-				query: {stage: 0}
+				loaders: ['react-hot', 'babel?stage=0']
 			},
 			{
 				test: /\.css$/,
 				loaders: ["style", "css"]
-			},
+			}
 		]
 	},
 	externals: {
@@ -43,5 +48,4 @@ module.exports = {
 	resolve: {
 		extensions: ['', '.js', '.jsx']
 	}
-	// historyApiFallback: true
 }

@@ -4,18 +4,16 @@ import TodosActions from '../actions/TodosActions'
 
 @createStore(flux)
 export default class TodosStore {
-	state = {
-		items: []
-	}
+	items = []
 
 	@bind(TodosActions.addItem)
 	addItem(item) {
-		this.state.items.push(item)
+		this.items.push(item)
 	}
 
 	@bind(TodosActions.updateItem)
 	updateItem({id, updates}) {
-		this.state.items.forEach((item) => {
+		this.items.forEach((item) => {
 			if (item.id == id) {
 				for (let k of Object.keys(updates)) {
 					item[k] = updates[k]

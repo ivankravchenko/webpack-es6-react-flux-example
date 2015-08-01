@@ -16,22 +16,25 @@ export default class TodosView extends React.Component {
 	render() {
 		return (
 			<div className="Todos">
-				<form className="Todos-newItemForm" onSubmit={this.onSubmitNewItemForm}>
-					<input type="text" name="summary"/>
-					<button>Add</button>
+				<form className="Todos-newItemForm pure-form" onSubmit={this.onSubmitNewItemForm}>
+					<fieldset>
+						<input type="text" name="summary" placeholder="New task..."/>
+						<button type="submit" className="pure-button pure-button-primary">Add</button>
+					</fieldset>
 				</form>
-				<ol className="Todos-items">
+				<ul className="Todos-items">
 					{this.props.items.map((item) => {
 						return (
-							<li data-id={item.id}>
-								<label>
+							<li key={item.id} data-id={item.id}>
+								<label className="pure-checkbox">
 									<input type="checkbox" checked={item.done} onChange={this.onChangeDoneCheckbox}/>
-									<span>{item.summary}</span>
+									&nbsp;
+									{item.summary}
 								</label>
 							</li>
 						)
 					})}
-				</ol>
+				</ul>
 			</div>
 		)
 	}
