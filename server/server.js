@@ -43,6 +43,7 @@ server.use(function (req, res, next) {
   } else {
     deviceType = ua.device.type;
   }*/
+  var deviceType = "desktop"; // JG: For now
 
   // We customize the onAbort method in order to handle redirects
   var router = Router.create({

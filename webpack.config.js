@@ -7,7 +7,7 @@ module.exports = {
 	cache: true,
 	context: __dirname + "/client",
 	entry: [
-		'webpack-dev-server/client?http://localhost:12345', // WebpackDevServer host and port
+		'webpack-dev-server/client?http://localhost:' + port, // WebpackDevServer host and port
 		'webpack/hot/only-dev-server',
 		'./app' // app entry point
 	],
@@ -33,7 +33,7 @@ module.exports = {
 				include: path.join(__dirname, '/client')
 			},
 			{
-				test: /\.css$/
+				test: /\.css$/,
 				loaders: ["style", "css"]
 			},
 		]
