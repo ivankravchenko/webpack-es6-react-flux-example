@@ -1,11 +1,15 @@
-const React = require("react")
+import React from 'react';
 
-export default React.createClass({
-	render () {
-		return (
-			<div className="AboutPage">
-				About
-			</div>
-		)
-	}
-})
+const displayName = 'AboutPage';
+
+export default class AboutPage extends React.Component {
+    render() {
+        return (
+            <div className="AboutPage">
+                About
+            </div>
+        );
+    }
+}
+
+AboutPage.displayName = displayName;
