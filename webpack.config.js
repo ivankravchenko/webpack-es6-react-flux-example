@@ -1,6 +1,5 @@
 const webpack = require('webpack');
 const path = require('path');
-const writeStats = require('./server/utils/writeStats.js');
 
 var port = process.env.HOT_LOAD_PORT || 8888;
 

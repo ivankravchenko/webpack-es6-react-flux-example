@@ -1,5 +1,3 @@
-"use strict";
-
 // This little dev server is basically a wrapped express server that
 // 'hot loads' our javascript for super fast live reload in development
 var webpack = require('webpack');
