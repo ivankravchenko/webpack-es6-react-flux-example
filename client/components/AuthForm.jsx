@@ -46,7 +46,7 @@ export default class AuthForm extends React.Component {
 							<form onSubmit={this.onLoginSubmit}>
 								<div>
 									<label>
-										<span>xUsername: </span>
+										<span>Username: </span>
 										<input name="username"/>
 									</label>
 								</div>
