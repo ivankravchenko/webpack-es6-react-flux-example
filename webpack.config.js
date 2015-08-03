@@ -18,7 +18,7 @@ module.exports = {
         sourceMapFilename: '[file].map',
         chunkFilename: '[id].bundle.js'
     },
-    devtool: 'eval-source-map',
+    devtool: 'cheap-module-eval-source-map',
     plugins: [
         // new webpack.optimize.UglifyJsPlugin()
         new webpack.HotModuleReplacementPlugin(),
@@ -30,7 +30,7 @@ module.exports = {
             {
                 test: /\.jsx?$/,
                 exclude: /(node_modules|bower_components)/,
-                loaders: ['react-hot', 'babel?stage=0&optional=runtime']
+                loaders: ['react-hot', 'babel?stage=0']
             },
             {
                 test: /\.css$/,
