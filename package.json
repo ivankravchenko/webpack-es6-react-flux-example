@@ -1,6 +1,6 @@
 {
-  "name": "webpack-es6-react-flux-example",
-  "version": "0.0.0",
+  "name": "myacc-react",
+  "version": "0.0.1",
   "main": "server/main.js",
   "devDependencies": {
     "babel-core": "^5.8.8",
@@ -24,10 +24,10 @@
   },
   "scripts": {
     "start": "NODE_ENV=production node --harmony server/main.js",
-    "lint": "eslint ./",
     "build": "NODE_ENV=production webpack -p --progress --colors",
+    "lint": "./node_modules/.bin/eslint ./; exit 0",
     "test": "./node_modules/.bin/mocha --recursive -c",
-    "test-watch": "./node_modules/.bin/mocha --recursive -c -w",
+    "watch-test": "./node_modules/.bin/mocha --recursive -c -w",
     "dev": "concurrent --kill-others \"npm run watch-client\" \"npm run start-dev\"",
     "watch-client": "NODE_ENV=development node server/webpack-dev-server.js",
     "start-dev": "NODE_ENV=development node server/main.js"
