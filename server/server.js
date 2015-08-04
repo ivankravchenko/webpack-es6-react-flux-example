@@ -14,7 +14,7 @@ const path = require('path');
 // Setup the express server
 const server = express();
 
-import bodyParser from 'body-parser'
+import bodyParser from 'body-parser';
 server.use(bodyParser.json());
 // Gzip all the things
 // //server.use(compression());
@@ -32,11 +32,11 @@ server.use('/static', express.static(path.join(__dirname, '/static')));
 
 // should use express router
 // but also need to inspect how react-router and express router can interact
-server.use('/auth', function(req, res, next) {
+server.use('/auth', (req, res) => {
     if (req.method === 'POST') {
-        res.json({ username: req.body.username });
+        res.json({username: req.body.username});
     } else {
-        res.status(409).json({ error: "invalid credentials" });
+        res.status(409).json({error: 'invalid credentials'});
     }
 });
 

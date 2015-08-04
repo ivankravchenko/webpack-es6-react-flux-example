@@ -5,9 +5,13 @@ export default {
         return new Promise((resolve, reject) => {
             request
                 .post('/auth')
-                .send({ username: username, password: password })
+                .send({username: username, password: password})
                 .end((err, res) => {
-                    err ? reject(err) : resolve(res)
+                    if (err) {
+                        reject(err);
+                    } else {
+                        resolve(res);
+                    }
                 });
         });
     }
