@@ -18,12 +18,12 @@ export default class AuthForm extends React.Component {
     }
 
     static getPropsFromStores() {
-        return AuthStore.getState()
+        return AuthStore.getState();
     }
 
     onLoginSubmit = (event) => {
         event.preventDefault();
-        const form = event.target
+        const form = event.target;
         AuthActions.loginAttempt(form.username.value, form.password.value);
     }
 
@@ -35,9 +35,9 @@ export default class AuthForm extends React.Component {
     render() {
         return (
             <div className={classnames({
-                AuthForm: true,
-                AuthForm_isWaiting: this.props.isWaiting,
-                AuthForm_isLoggedIn: this.props.isLoggedIn
+                'AuthForm': true,
+                'AuthForm_isWaiting': this.props.isWaiting,
+                'AuthForm_isLoggedIn': this.props.isLoggedIn
             })}>
                 {this.props.isWaiting ? (
                     <span>Logging in...</span>

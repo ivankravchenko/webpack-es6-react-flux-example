@@ -40,8 +40,8 @@ module.exports = {
     resolve: {
         extensions: ['', '.js', '.jsx'],
         modulesDirectories: [
-            "client",
-            "node_modules"
+            'client',
+            'node_modules'
         ]
     }
 };

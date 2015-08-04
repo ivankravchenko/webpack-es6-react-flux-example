@@ -79,7 +79,7 @@ server.use(function(req, res, next) { // eslint-disable-line
     // Write the response
     // TODO: Get from Handlebars template
     res.set('Content-Type', 'text/html');
-    const scriptLocation = process.env.NODE_ENV == 'development' ?
+    const scriptLocation = process.env.NODE_ENV === 'development' ?
         `http://localhost:${process.env.HOT_LOAD_PORT || 8888}/build/main.bundle.js` :
         `/build/client.js`;
     res.end(

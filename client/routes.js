@@ -1,6 +1,6 @@
 import React from 'react';
 import Router from 'react-router';
-const {Route, RouteHandler, DefaultRoute, NotFoundRoute} = Router;
+const {Route, DefaultRoute, NotFoundRoute} = Router;
 
 import HomePage from 'components/HomePage';
 import AboutPage from 'components/AboutPage';
