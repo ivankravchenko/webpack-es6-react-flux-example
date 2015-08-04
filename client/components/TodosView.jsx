@@ -6,7 +6,12 @@ import connectToStores from 'alt/utils/connectToStores';
 @connectToStores
 export default class TodosView extends React.Component {
     static propTypes = {
-        items: React.PropTypes.array
+        items: React.PropTypes.arrayOf(
+            React.PropTypes.shape({
+                id: React.PropTypes.string,
+                done: React.PropTypes.bool,
+                summary: React.PropTypes.string
+            }))
     };
 
     static getStores() {
