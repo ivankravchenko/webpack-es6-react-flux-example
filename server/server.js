@@ -78,25 +78,14 @@ server.use(function(req, res, next) { // eslint-disable-line
 
     // Write the response
     // TODO: Get from Handlebars template
-    res.write('<html>');
-    res.write('<head><meta charSet="utf-8" /></head>'); // JG: used to render head derived above
-    res.write('<body>');
-    res.write(content);
-    res.write('</body>');
-
-    // In development, the compiled javascript is served by a WebpackDevServer, which lets us 'hot load' scripts in for live editing.
-    if (process.env.NODE_ENV === 'development') {
-        const hotLoadPort = process.env.HOT_LOAD_PORT || 8888;
-        res.write('<script src="http://localhost:' + hotLoadPort + '/build/main.bundle.js" defer></script>');
-    }
-
-    // In production, we just serve the pre-compiled assets from the /build directory
-    if (process.env.NODE_ENV === 'production') {
-        res.write('<script src="/build/client.js" defer></script>');
-    }
-
-    res.write('</html>');
-    res.end();
+    res.set('Content-Type', 'text/html');
+    const scriptLocation = process.env.NODE_ENV == 'development' ?
+        `http://localhost:${process.env.HOT_LOAD_PORT || 8888}/build/main.bundle.js` :
+        `/build/client.js`;
+    res.end(
+        '<meta charset="UTF-8">' +
+        `<body>${content}</body>` +
+        `<script src="${scriptLocation}" defer></script>`);
 });
 
 const port = process.env.PORT || 8080;
