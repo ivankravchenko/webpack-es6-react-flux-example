@@ -1,7 +1,5 @@
 import React from 'react';
 
-const displayName = 'NotFoundPage';
-
 export default class NotFoundPage extends React.Component {
     render() {
         return (
@@ -11,5 +9,3 @@ export default class NotFoundPage extends React.Component {
         );
     }
 }
-
-NotFoundPage.displayName = displayName;
