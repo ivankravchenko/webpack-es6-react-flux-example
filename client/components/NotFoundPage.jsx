@@ -1,8 +1,9 @@
 import React from 'react';
 
-const displayName = 'NotFoundPage';
-
 export default class NotFoundPage extends React.Component {
+
+    static displayName = 'NotFoundPage';
+
     render() {
         return (
             <div className="NotFoundPage">
@@ -11,5 +12,3 @@ export default class NotFoundPage extends React.Component {
         );
     }
 }
-
-NotFoundPage.displayName = displayName;

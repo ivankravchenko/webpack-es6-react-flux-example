@@ -3,9 +3,10 @@ import {Link} from 'react-router';
 import TodosView from '../components/TodosView';
 import AuthForm from '../components/AuthForm';
 
-const displayName = 'HomePage';
-
 export default class HomePage extends React.Component {
+
+    static displayName = 'HomePage';
+
     render() {
         return (
             <div className="HomePage">
@@ -19,5 +20,3 @@ export default class HomePage extends React.Component {
         );
     }
 }
-
-HomePage.displayName = displayName;

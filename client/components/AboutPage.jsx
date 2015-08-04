@@ -1,8 +1,9 @@
 import React from 'react';
 
-const displayName = 'AboutPage';
-
 export default class AboutPage extends React.Component {
+
+    static displayName = 'AboutPage';
+
     render() {
         return (
             <div className="AboutPage">
@@ -11,5 +12,3 @@ export default class AboutPage extends React.Component {
         );
     }
 }
-
-AboutPage.displayName = displayName;

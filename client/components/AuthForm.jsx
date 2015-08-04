@@ -4,16 +4,17 @@ import AuthActions from '../actions/AuthActions';
 import connectToStores from 'alt/utils/connectToStores';
 import classnames from 'classnames';
 
-const displayName = 'AuthForm';
-const propTypes = {
-    isWaiting: React.PropTypes.bool,
-    isLoggedIn: React.PropTypes.bool,
-    username: React.PropTypes.string,
-    error: React.PropTypes.string
-};
-
 @connectToStores
 export default class AuthForm extends React.Component {
+    static displayName = 'AuthForm';
+
+    static propTypes = {
+        isWaiting: React.PropTypes.bool,
+        isLoggedIn: React.PropTypes.bool,
+        username: React.PropTypes.string,
+        error: React.PropTypes.string
+    };
+
     static getStores() {
         return [AuthStore];
     }
@@ -73,6 +74,3 @@ export default class AuthForm extends React.Component {
         );
     }
 }
-
-AuthForm.displayName = displayName;
-AuthForm.propTypes = propTypes;

@@ -3,11 +3,20 @@ import TodosStore from '../stores/TodosStore';
 import TodosActions from '../actions/TodosActions';
 import connectToStores from 'alt/utils/connectToStores';
 
-const displayName = 'TodosView';
-const propTypes = {};
-
 @connectToStores
 export default class TodosView extends React.Component {
+
+    static displayName = 'TodosView';
+
+    static propTypes = {
+        items: React.PropTypes.arrayOf(
+            React.PropTypes.shape({
+                id: React.PropTypes.string,
+                done: React.PropTypes.bool,
+                summary: React.PropTypes.string
+            }))
+    };
+
     constructor(props) {
         super(props);
         this.state = {};
@@ -58,7 +67,3 @@ export default class TodosView extends React.Component {
         });
     }
 }
-
-TodosView.displayName = displayName;
-TodosView.propTypes = propTypes;
-
