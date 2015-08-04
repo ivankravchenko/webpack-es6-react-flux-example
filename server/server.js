@@ -1,26 +1,33 @@
 /* eslint-disable no-console, no-process-env */
+import path from 'path';
 import express from 'express';
+import bodyParser from 'body-parser';
+import cors from 'cors';
+import React from 'react';
+import routes from '../client/routes';
+import Router from 'react-router';
+import compression from 'compression';
+// //import UAParser from 'ua-parser-js';
 
-// //const compression = require('compression');
-// //const cors = require('cors');
-const React = require('react');
-const routes = require('../client/routes');
+// CONFIG SETTINGS
+const PORT = process.env.PORT || 8080;
+const HOT_LOAD_PORT = process.env.HOT_LOAD_PORT || 8888;
+const isProduction = process.env.NODE_ENV === 'production';
+const isDevelopment = process.env.NODE_ENV === 'development';
+
 // //const Head = React.createFactory(require('./components/Head'));
-const Router = require('react-router');
 // //const ReactDocumentTitle = require('react-document-title');
-// const UAParser = require('ua-parser-js');
-const path = require('path');
 
 // Setup the express server
 const server = express();
 
-import bodyParser from 'body-parser';
+// To accept POST requests
 server.use(bodyParser.json());
 // Gzip all the things
-// //server.use(compression());
+server.use(compression());
 
 // Serve a static directory for the webpack-compiled Javascript and CSS. Only in production since the webpack dev server handles this otherwise.
-if (process.env.NODE_ENV === 'production') {
+if (isProduction) {
     server.use('/build', express.static(path.join(__dirname, '/build')));
 }
 
@@ -28,7 +35,12 @@ if (process.env.NODE_ENV === 'production') {
 server.use('/static', express.static(path.join(__dirname, '/static')));
 
 // Cross-origin resource sharing
-// //server.use(cors());
+server.use(cors({
+    origin: [
+        `http://localhost:${HOT_LOAD_PORT}`, 
+        'http://localhost'
+    ]
+}));
 
 // should use express router
 // but also need to inspect how react-router and express router can interact
@@ -92,8 +104,8 @@ server.use(function(req, res, next) { // eslint-disable-line
     // Write the response
     // TODO: Get from Handlebars template
     res.set('Content-Type', 'text/html');
-    const scriptLocation = process.env.NODE_ENV === 'development' ?
-        `http://localhost:${process.env.HOT_LOAD_PORT || 8888}/build/main.bundle.js` :
+    const scriptLocation = isDevelopment ?
+        `http://localhost:${HOT_LOAD_PORT}/build/main.bundle.js` :
         `/build/client.js`;
     res.end(
         '<meta charset="UTF-8">' +
@@ -101,9 +113,8 @@ server.use(function(req, res, next) { // eslint-disable-line
         `<script src="${scriptLocation}" defer></script>`);
 });
 
-const port = process.env.PORT || 8080;
-server.listen(port);
+server.listen(PORT);
 
-if (process.env.NODE_ENV === 'development') {
-    console.log('server.js is listening on port ' + port);
+if (isDevelopment) {
+    console.log('server.js is listening on port ' + PORT);
 }
