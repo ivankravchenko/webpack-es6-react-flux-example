@@ -1,7 +1,7 @@
 import React from 'react';
 import {Link} from 'react-router';
-import TodosView from '../components/TodosView';
-import AuthForm from '../components/AuthForm';
+import TodosView from 'components/TodosView';
+import AuthForm from 'components/AuthForm';
 
 const displayName = 'HomePage';
 

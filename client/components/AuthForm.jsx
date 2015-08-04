@@ -1,6 +1,6 @@
 import React from 'react';
-import AuthStore from '../stores/AuthStore';
-import AuthActions from '../actions/AuthActions';
+import AuthStore from 'stores/AuthStore';
+import AuthActions from 'actions/AuthActions';
 import connectToStores from 'alt/utils/connectToStores';
 import classnames from 'classnames';
 

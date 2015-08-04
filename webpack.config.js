@@ -42,7 +42,11 @@ module.exports = {
         // 'react': 'React'
     },
     resolve: {
-        extensions: ['', '.js', '.jsx']
+        extensions: ['', '.js', '.jsx'],
+        modulesDirectories: [
+            "client",
+            "node_modules"
+        ]
     }
     // historyApiFallback: true
 };
