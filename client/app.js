@@ -1,4 +1,4 @@
-import 'normalize.css';
+import 'purecss';
 
 import React from 'react';
 import Router from 'react-router';
