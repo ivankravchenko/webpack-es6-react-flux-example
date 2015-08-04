@@ -6,6 +6,8 @@
 
 // globals
 global.assert = require('assert');
+process.env.NODE_PATH = 'client';
+require('module').Module._initPaths();
 global.babel = require('babel/register')({stage:0});
 global.React = require('react/addons');
 global.jsdom = require('jsdom').jsdom('<!doctype html><html><body></body></html>');
