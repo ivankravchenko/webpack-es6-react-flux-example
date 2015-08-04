@@ -8,7 +8,7 @@ export default class TodosView extends React.Component {
     static propTypes = {
         items: React.PropTypes.arrayOf(
             React.PropTypes.shape({
-                id: React.PropTypes.string,
+                id: React.PropTypes.number,
                 done: React.PropTypes.bool,
                 summary: React.PropTypes.string
             }))
@@ -33,7 +33,7 @@ export default class TodosView extends React.Component {
                 <ol className="Todos-items">
                     {this.props.items.map((item) => {
                         return (
-                            <li data-id={item.id}>
+                            <li data-id={item.id} key={item.id}>
                                 <label>
                                     <input type="checkbox" checked={item.done} onChange={this.onChangeDoneCheckbox}/>
                                     &nbsp;

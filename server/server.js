@@ -37,7 +37,7 @@ server.use('/static', express.static(path.join(__dirname, '/static')));
 // Cross-origin resource sharing
 server.use(cors({
     origin: [
-        `http://localhost:${HOT_LOAD_PORT}`, 
+        `http://localhost:${PORT}`, 
         'http://localhost'
     ]
 }));
