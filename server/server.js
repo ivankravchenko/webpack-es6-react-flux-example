@@ -13,6 +13,9 @@ const path = require('path');
 
 // Setup the express server
 const server = express();
+
+import bodyParser from 'body-parser'
+server.use(bodyParser.json());
 // Gzip all the things
 // //server.use(compression());
 
@@ -26,6 +29,16 @@ server.use('/static', express.static(path.join(__dirname, '/static')));
 
 // Cross-origin resource sharing
 // //server.use(cors());
+
+// should use express router
+// but also need to inspect how react-router and express router can interact
+server.use('/auth', function(req, res, next) {
+    if (req.method === 'POST') {
+        res.json({ username: req.body.username });
+    } else {
+        res.status(409).json({ error: "invalid credentials" });
+    }
+});
 
 // Our handler for all incoming requests
 server.use(function(req, res, next) { // eslint-disable-line
