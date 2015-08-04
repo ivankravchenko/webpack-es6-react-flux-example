@@ -109,7 +109,7 @@ server.use(function(req, res, next) { // eslint-disable-line
         `/build/client.js`;
     res.end(
         '<meta charset="UTF-8">' +
-        `<body>${content}</body>` +
+        `<body><div>${content}</div></body>` +
         `<script src="${scriptLocation}" defer></script>`);
 });
 
