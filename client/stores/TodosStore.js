@@ -1,6 +1,6 @@
-import flux from '../flux';
+import flux from 'flux';
 import {createStore, bind} from 'alt/utils/decorators';
-import TodosActions from '../actions/TodosActions';
+import TodosActions from 'actions/TodosActions';
 
 @createStore(flux)
 export default class TodosStore {

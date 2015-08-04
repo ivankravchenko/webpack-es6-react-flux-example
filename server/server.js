@@ -13,6 +13,9 @@ const path = require('path');
 
 // Setup the express server
 const server = express();
+
+import bodyParser from 'body-parser';
+server.use(bodyParser.json());
 // Gzip all the things
 // //server.use(compression());
 
@@ -26,6 +29,16 @@ server.use('/static', express.static(path.join(__dirname, '/static')));
 
 // Cross-origin resource sharing
 // //server.use(cors());
+
+// should use express router
+// but also need to inspect how react-router and express router can interact
+server.use('/auth', (req, res) => {
+    if (req.method === 'POST') {
+        res.json({username: req.body.username});
+    } else {
+        res.status(409).json({error: 'invalid credentials'});
+    }
+});
 
 // Our handler for all incoming requests
 server.use(function(req, res, next) { // eslint-disable-line
@@ -78,25 +91,14 @@ server.use(function(req, res, next) { // eslint-disable-line
 
     // Write the response
     // TODO: Get from Handlebars template
-    res.write('<html>');
-    res.write('<head><meta charSet="utf-8" /></head>'); // JG: used to render head derived above
-    res.write('<body>');
-    res.write(content);
-    res.write('</body>');
-
-    // In development, the compiled javascript is served by a WebpackDevServer, which lets us 'hot load' scripts in for live editing.
-    if (process.env.NODE_ENV === 'development') {
-        const hotLoadPort = process.env.HOT_LOAD_PORT || 8888;
-        res.write('<script src="http://localhost:' + hotLoadPort + '/build/main.bundle.js" defer></script>');
-    }
-
-    // In production, we just serve the pre-compiled assets from the /build directory
-    if (process.env.NODE_ENV === 'production') {
-        res.write('<script src="/build/client.js" defer></script>');
-    }
-
-    res.write('</html>');
-    res.end();
+    res.set('Content-Type', 'text/html');
+    const scriptLocation = process.env.NODE_ENV === 'development' ?
+        `http://localhost:${process.env.HOT_LOAD_PORT || 8888}/build/main.bundle.js` :
+        `/build/client.js`;
+    res.end(
+        '<meta charset="UTF-8">' +
+        `<body>${content}</body>` +
+        `<script src="${scriptLocation}" defer></script>`);
 });
 
 const port = process.env.PORT || 8080;
@@ -105,17 +107,3 @@ server.listen(port);
 if (process.env.NODE_ENV === 'development') {
     console.log('server.js is listening on port ' + port);
 }
-
-
-// old stuff ----
-
-// const express = require("express");
-// const http = require("http");
-// const app = express();
-// app.use(express.static(__dirname + "/../public"));
-
-// const server = http.createServer(app);
-// const PORT = process.env.PORT || 3000;
-// server.listen(PORT, function() {
-//   console.log("Server is listening on port " + PORT)
-// });

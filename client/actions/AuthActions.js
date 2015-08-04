@@ -1,5 +1,5 @@
-import flux from '../flux';
-import AuthService from '../services/AuthService';
+import flux from 'flux';
+import AuthService from 'services/AuthService';
 
 class AuthActions {
     loginAttempt(username, password) {

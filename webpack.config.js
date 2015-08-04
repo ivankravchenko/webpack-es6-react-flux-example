@@ -20,7 +20,6 @@ module.exports = {
     },
     devtool: 'cheap-module-eval-source-map',
     plugins: [
-        // new webpack.optimize.UglifyJsPlugin()
         new webpack.HotModuleReplacementPlugin(),
         new webpack.NoErrorsPlugin()
     ],
@@ -38,11 +37,11 @@ module.exports = {
             }
         ]
     },
-    externals: {
-        // 'react': 'React'
-    },
     resolve: {
-        extensions: ['', '.js', '.jsx']
+        extensions: ['', '.js', '.jsx'],
+        modulesDirectories: [
+            'client',
+            'node_modules'
+        ]
     }
-    // historyApiFallback: true
 };

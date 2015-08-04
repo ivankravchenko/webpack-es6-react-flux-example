@@ -1,13 +1,10 @@
 import React from 'react';
-import TodosStore from '../stores/TodosStore';
-import TodosActions from '../actions/TodosActions';
+import TodosStore from 'stores/TodosStore';
+import TodosActions from 'actions/TodosActions';
 import connectToStores from 'alt/utils/connectToStores';
 
 @connectToStores
 export default class TodosView extends React.Component {
-
-    static displayName = 'TodosView';
-
     static propTypes = {
         items: React.PropTypes.arrayOf(
             React.PropTypes.shape({
@@ -16,11 +13,6 @@ export default class TodosView extends React.Component {
                 summary: React.PropTypes.string
             }))
     };
-
-    constructor(props) {
-        super(props);
-        this.state = {};
-    }
 
     static getStores() {
         return [TodosStore];
