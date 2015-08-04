@@ -35,9 +35,9 @@ export default class AuthForm extends React.Component {
     render() {
         return (
             <div className={classnames({
-                'AuthForm': true,
-                'AuthForm_isWaiting': this.props.isWaiting,
-                'AuthForm_isLoggedIn': this.props.isLoggedIn
+                AuthForm: true,
+                AuthForm_isWaiting: this.props.isWaiting,
+                AuthForm_isLoggedIn: this.props.isLoggedIn
             })}>
                 {this.props.isWaiting ? (
                     <span>Logging in...</span>

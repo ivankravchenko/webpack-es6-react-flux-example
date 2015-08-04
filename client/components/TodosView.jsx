@@ -25,6 +25,7 @@ export default class TodosView extends React.Component {
     render() {
         return (
             <div className="Todos">
+            <h4>Proverbial Todo List Example:</h4>
                 <form className="Todos-newItemForm" onSubmit={this.onSubmitNewItemForm}>
                     <input type="text" name="summary"/>
                     <button>Add</button>
@@ -35,6 +36,7 @@ export default class TodosView extends React.Component {
                             <li data-id={item.id}>
                                 <label>
                                     <input type="checkbox" checked={item.done} onChange={this.onChangeDoneCheckbox}/>
+                                    &nbsp;
                                     <span>{item.summary}</span>
                                 </label>
                             </li>
