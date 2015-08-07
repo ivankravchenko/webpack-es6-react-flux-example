@@ -30,29 +30,17 @@
     "webpack-error-notification": "^0.1.4"
   },
   "scripts": {
-    "babel-build": "rm -rf build && babel --out-dir build src",
-    "babel-watch": "rm -rf build && (babel --watch --out-dir build src &) && sleep 2",
-    "lint": "eslint src gulpfile.babel.js webpack.config.js && scss-lint src",
-    "lint-watch": "nodemon --watch src --exec 'eslint src && scss-lint src'",
-    "test": "npm run babel-build && jest",
-    "test-watch": "npm run babel-watch && nodemon --watch build --exec 'jest'",
-    "coveralls": "npm test && cat coverage/lcov.info | coveralls",
+    "lint": "./node_modules/.bin/eslint . --ext .js,.jsx; exit 0",
+    "lint-watch": "nodemon --watch client --exec 'npm run lint'",
+    "test": "./node_modules/.bin/mocha --recursive -c",
+    "watch-test": "./node_modules/.bin/mocha --recursive -c -w",
     "bundle-client": "webpack --config webpack.client.js --release",
     "bundle-server": "webpack --config webpack.server.js --release",
     "bundle": "rm -rf dist && mkdir dist && cp -rf public dist/public && npm run bundle-client && npm run bundle-server",
     "start": "node dist/server.js",
     "watch-client": "webpack-dev-server --config webpack.client.js --content-base \"http://localhost:8080\"  --inline --hot --host localhost --port 8888",
-    "watch-server": "nodemon -w 'client/server.js' -w 'client/views' -w 'webpack.babel.js' -x 'webpack --config webpack.server.js && node dist/server.js'"
-  },
-  "oldscripts": {
-    "start": "NODE_ENV=production node --harmony server/main.js",
-    "build": "NODE_ENV=production webpack -p --progress --colors",
-    "lint": "./node_modules/.bin/eslint . --ext .js,.jsx; exit 0",
-    "test": "./node_modules/.bin/mocha --recursive -c",
-    "watch-test": "./node_modules/.bin/mocha --recursive -c -w",
-    "dev": "concurrent --kill-others \"npm run watch-client\" \"npm run start-dev\"",
-    "watch-client": "NODE_ENV=development node server/webpack-dev-server.js",
-    "start-dev": "NODE_ENV=development node server/main.js"
+    "watch-server": "nodemon -w 'client/server.js' -w 'client/views' -w 'webpack.babel.js' -x 'webpack --config webpack.server.js && node dist/server.js'",
+    "dev": "concurrent --kill-others \"npm run watch-server\" \"npm run watch-client\""
   },
   "dependencies": {
     "alt": "^0.17.1",
