@@ -13,6 +13,14 @@ const GLOBALS = {
 
 const CSS_LOADER = DEBUG ? 'css' : 'css?minimize';
 const CSS_LOADER_PARAMS = `modules&localIdentName=${DEBUG ? '[dir]--[local]--[sourceHash:5]' : '[sourceHash]&minimize'}`;
+
+// TODO: Move this to config
+const PORT = process.env.PORT || 8080;
+const HOT_LOAD_PORT = process.env.HOT_LOAD_PORT || 8888;
+const HOST_NAME = process.env.HOST_NAME || 'localhost';
+
+
+
 /*const SASS_LOADER = 'sass?sourceMap&' + [
   path.join(__dirname, 'src', 'sass'),
   path.join(__dirname, 'node_modules'),
@@ -73,15 +81,13 @@ const config = {
   }
 };
 
-console.log("DEBUG : ", `http://${process.env.FRONTEND_HOSTNAME || '0.0.0.0'}`);
-
 // Configuration for the client-side bundle (app.js)
 const appConfig = Object.assign({}, config, {
   entry: './client/app.js',
 
   output: {
     path: '/dist/public',
-    publicPath: DEBUG ? `http://${process.env.FRONTEND_HOSTNAME || 'localhost'}:${process.env.FRONTEND_WP_PORT || 8080}/` : '',
+    publicPath: DEBUG ? `http://${HOST_NAME}:${HOT_LOAD_PORT}/` : '',
     filename: DEBUG ? 'bundle.js' : 'bundle.[hash].js'
   },
 
@@ -108,7 +114,7 @@ const appConfig = Object.assign({}, config, {
 
 // Configuration for the server-side bundle (server.js)
 const serverConfig = Object.assign({}, config, {
-  entry: './server/server.js',
+  entry: './client/server.js',
 
   output: {
     path: './dist',
@@ -152,3 +158,5 @@ export default {
   appConfig,
   serverConfig
 };
+
+

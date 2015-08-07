@@ -4,10 +4,10 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import React from 'react';
-import routes from '../client/routes';
+import routes from './routes';
 import Router from 'react-router';
 import compression from 'compression';
-import indexView from 'views/index.hbs';
+import indexView from './views/index.hbs';
 
 import fs from 'fs';
 // //import UAParser from 'ua-parser-js';
@@ -15,9 +15,9 @@ import fs from 'fs';
 // CONFIG SETTINGS
 const PORT = process.env.PORT || 8080;
 const HOT_LOAD_PORT = process.env.HOT_LOAD_PORT || 8888;
-const isProduction = process.env.NODE_ENV === 'production';
-const isDevelopment = process.env.NODE_ENV === 'development';
 const HOST_NAME = process.env.HOST_NAME || 'localhost';
+
+console.log('!!!! PORT', PORT, ' HOT_LOAD_PORT', HOT_LOAD_PORT, ' HOST_NAME', HOST_NAME);
 
 // //const Head = React.createFactory(require('./components/Head'));
 // //const ReactDocumentTitle = require('react-document-title');
@@ -27,8 +27,8 @@ const server = express();
 
 let assets = {};
 
-if (!true/*__DEV__*/) {
-    let assetPath = path.join(__dirname, '../dist/webpack-assets.json');
+if (!__DEV__) {
+    let assetPath = path.join(__dirname, 'webpack-assets.json');
   console.log('reading asset names', assetPath);
   fs.readFile(assetPath, 'utf-8', function(err, data) {
     if (err) {
@@ -45,28 +45,19 @@ server.use(bodyParser.json());
 // Gzip all the things
 server.use(compression());
 
-console.log('after bodyParser and compression');
-
-// Serve a static directory for the webpack-compiled Javascript and CSS. Only in production since the webpack dev server handles this otherwise.
-if (isProduction) {
-    server.use('/build', express.static(path.join(__dirname, '/build')));
-}
-
-let publicPath = path.join(__dirname, '..', false ? 'public':'dist/public');
-console.log('Public Path: ', publicPath)
+// Serve a static directory for the webpack-compiled Javascript and CSS. 
+// Depending on production or dev, we'll include the appropriate path
+const publicPath = __DEV__ ? './public' : './dist/public';
+console.log(`serving static from ${publicPath}`);
 server.use(express.static(publicPath));
 
-
-// Serves up a static directory for images and other assets that we don't (yet) require via Webpack
-server.use('/static', express.static(path.join(__dirname, '/static')));
-
 // Cross-origin resource sharing
-server.use(cors({
-    origin: [
-        `http://${HOST_NAME}:${PORT}`, 
-        `http://${HOST_NAME}`
-    ]
-}));
+// server.use(cors({
+//     origin: [
+//         `http://${HOST_NAME}:${PORT}`, 
+//         `http://${HOST_NAME}`
+//     ]
+// }));
 
 // should use express router
 // but also need to inspect how react-router and express router can interact
@@ -78,11 +69,8 @@ server.use('/auth', (req, res) => {
     }
 });
 
-console.log('right before server.use function');
-
 // Our handler for all incoming requests
 server.use(function(req, res, next) { // eslint-disable-line
-    console.log('Server handler');
 
     // In order to handle "media queries" server-side (preventing FOUT), we parse the user agent string,
     // and pass a string down through the router that lets components style and render themselves
@@ -140,7 +128,7 @@ server.use(function(req, res, next) { // eslint-disable-line
         script: '//dehydrated state would go here',
         title: 'MYACC-REACT',
         showPreloader: false, //this.path && this.path === '/',
-        jsBundle: /*assets.js ||*/ `http://${HOST_NAME}:${HOT_LOAD_PORT}/bundle.js`,
+        jsBundle: assets.js || `http://${HOST_NAME}:${HOT_LOAD_PORT}/bundle.js`,
         cssBundle: assets.css || '',
         inlineCss: ''//inlineCss || ''
     });
@@ -157,10 +145,6 @@ server.use(function(req, res, next) { // eslint-disable-line
     //     `<script src="${scriptLocation}" defer></script>`);
 });
 
-console.log("Right before server.listen", PORT);
-
-server.listen(PORT);
-
-if (isDevelopment) {
-    console.log('server.js is listening on port ' + PORT);
-}
+server.listen(PORT, HOST_NAME, function() {
+    console.log(` => Server Listening on ${HOST_NAME}:${PORT}`);
+});

@@ -9,9 +9,9 @@ const port = process.env.HOT_LOAD_PORT || 8888;
 const path = require('path');
 
 new WebpackDevServer(webpack(config), {
-    //contentBase: 'http://' + host + ':' + port,
+    contentBase: 'http://' + host + ':' + port,
     //publicPath: path.resolve(config.output.publicPath),
-    publicPath: config.output.publicPath,
+    publicPath: '/dist/public',
     //noInfo: true,
     progress: true,
     hot: true,
