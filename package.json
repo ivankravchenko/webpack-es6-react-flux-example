@@ -31,7 +31,7 @@
   },
   "scripts": {
     "lint": "./node_modules/.bin/eslint . --ext .js,.jsx; exit 0",
-    "lint-watch": "nodemon --watch client --exec 'npm run lint'",
+    "lint-watch": "nodemon --watch src --exec 'npm run lint'",
     "test": "./node_modules/.bin/mocha --recursive -c",
     "watch-test": "./node_modules/.bin/mocha --recursive -c -w",
     "bundle-client": "webpack --config webpack.client.js --release",
@@ -39,7 +39,7 @@
     "bundle": "rm -rf dist && mkdir dist && cp -rf public dist/public && npm run bundle-client && npm run bundle-server",
     "start": "node dist/server.js",
     "watch-client": "webpack-dev-server --config webpack.client.js --content-base \"http://localhost:8080\"  --inline --hot --host localhost --port 8888",
-    "watch-server": "nodemon -w 'client/server.js' -w 'client/views' -w 'webpack.babel.js' -x 'webpack --config webpack.server.js && node dist/server.js'",
+    "watch-server": "nodemon -w 'src/server.js' -w 'src/views' -w 'webpack.babel.js' -x 'webpack --config webpack.server.js && node dist/server.js'",
     "dev": "concurrent --kill-others \"npm run watch-server\" \"npm run watch-client\""
   },
   "dependencies": {

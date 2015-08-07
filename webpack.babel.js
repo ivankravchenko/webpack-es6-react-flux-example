@@ -48,7 +48,7 @@ const config = {
     resolve: {
         extensions: ['', '.js', '.jsx'],
         modulesDirectories: [
-            'client',
+            'src',
             'node_modules'
         ]
     },
@@ -79,7 +79,7 @@ const config = {
 
 // Configuration for the client-side bundle (app.js)
 const appConfig = Object.assign({}, config, {
-    entry: './client/app.js',
+    entry: './src/app.js',
 
     output: {
         path: '/dist/public',
@@ -113,7 +113,7 @@ const appConfig = Object.assign({}, config, {
 
 // Configuration for the server-side bundle (server.js)
 const serverConfig = Object.assign({}, config, {
-    entry: './client/server.js',
+    entry: './src/server.js',
 
     output: {
         path: './dist',
