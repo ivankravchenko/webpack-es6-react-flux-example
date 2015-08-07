@@ -42,7 +42,7 @@
     "bundle": "rm -rf dist && mkdir dist && cp -rf public dist/public && npm run bundle-client && npm run bundle-server",
     "start": "node dist/server.js",
     "watch-client": "webpack-dev-server --config webpack.client.js --content-base \"http://localhost:8080\"  --inline --hot --host localhost --port 8888",
-    "watch-server": "nodemon -w 'client/server.js' -w 'client/views' -x 'webpack --config webpack.server.js && node dist/server.js'"
+    "watch-server": "nodemon -w 'client/server.js' -w 'client/views' -w 'webpack.babel.js' -x 'webpack --config webpack.server.js && node dist/server.js'"
   },
   "oldscripts": {
     "start": "NODE_ENV=production node --harmony server/main.js",

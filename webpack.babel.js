@@ -1,25 +1,20 @@
 import WebpackErrorNotificationPlugin from 'webpack-error-notification';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import AssetsPlugin from 'assets-webpack-plugin';
-
 import webpack from 'webpack';
 import path from 'path';
 
 const DEBUG = !process.argv.includes('--release');
 const GLOBALS = {
   'process.env.NODE_ENV': DEBUG ? '"development"' : '"production"',
-  '__DEV__': DEBUG
+  '__DEV__': DEBUG,
+  'process.env.PORT': process.env.PORT || 8080,
+  'process.env.HMR_PORT': process.env.HMR_PORT || 8888,
+  'process.env.HOST': process.env.HOST || '"localhost"'
 };
 
 const CSS_LOADER = DEBUG ? 'css' : 'css?minimize';
 const CSS_LOADER_PARAMS = `modules&localIdentName=${DEBUG ? '[dir]--[local]--[sourceHash:5]' : '[sourceHash]&minimize'}`;
-
-// TODO: Move this to config
-const PORT = process.env.PORT || 8080;
-const HOT_LOAD_PORT = process.env.HOT_LOAD_PORT || 8888;
-const HOST_NAME = process.env.HOST_NAME || 'localhost';
-
-
 
 /*const SASS_LOADER = 'sass?sourceMap&' + [
   path.join(__dirname, 'src', 'sass'),
@@ -87,7 +82,7 @@ const appConfig = Object.assign({}, config, {
 
   output: {
     path: '/dist/public',
-    publicPath: DEBUG ? `http://${HOST_NAME}:${HOT_LOAD_PORT}/` : '',
+    publicPath: DEBUG ? `http://${GLOBALS['process.env.HOST']}:${GLOBALS['process.env.HMR_PORT']}/` : '',
     filename: DEBUG ? 'bundle.js' : 'bundle.[hash].js'
   },
 

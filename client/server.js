@@ -1,4 +1,5 @@
 /* eslint-disable no-console, no-process-env */
+import fs from 'fs';
 import path from 'path';
 import express from 'express';
 import bodyParser from 'body-parser';
@@ -8,16 +9,8 @@ import routes from './routes';
 import Router from 'react-router';
 import compression from 'compression';
 import indexView from './views/index.hbs';
-
-import fs from 'fs';
 // //import UAParser from 'ua-parser-js';
 
-// CONFIG SETTINGS
-const PORT = process.env.PORT || 8080;
-const HOT_LOAD_PORT = process.env.HOT_LOAD_PORT || 8888;
-const HOST_NAME = process.env.HOST_NAME || 'localhost';
-
-console.log('!!!! PORT', PORT, ' HOT_LOAD_PORT', HOT_LOAD_PORT, ' HOST_NAME', HOST_NAME);
 
 // //const Head = React.createFactory(require('./components/Head'));
 // //const ReactDocumentTitle = require('react-document-title');
@@ -28,9 +21,7 @@ const server = express();
 let assets = {};
 
 if (!__DEV__) {
-    let assetPath = path.join(__dirname, 'webpack-assets.json');
-  console.log('reading asset names', assetPath);
-  fs.readFile(assetPath, 'utf-8', function(err, data) {
+  fs.readFile(path.join(__dirname, 'webpack-assets.json'), 'utf-8', function(err, data) {
     if (err) {
       return console.error('ERROR: ', err);
     }
@@ -128,23 +119,14 @@ server.use(function(req, res, next) { // eslint-disable-line
         script: '//dehydrated state would go here',
         title: 'MYACC-REACT',
         showPreloader: false, //this.path && this.path === '/',
-        jsBundle: assets.js || `http://${HOST_NAME}:${HOT_LOAD_PORT}/bundle.js`,
+        jsBundle: assets.js || `http://${process.env.HOST}:${process.env.HMR_PORT}/bundle.js`,
         cssBundle: assets.css || '',
         inlineCss: ''//inlineCss || ''
     });
 
     res.end(ssrPayload);
-
-
-    // const scriptLocation = isDevelopment ?
-    //     `http://localhost:${HOT_LOAD_PORT}/build/main.bundle.js` :
-    //     `/build/client.js`;
-    // res.end(
-    //     '<meta charset="UTF-8">' +
-    //     `<body><div>${content}</div></body>` +
-    //     `<script src="${scriptLocation}" defer></script>`);
 });
 
-server.listen(PORT, HOST_NAME, function() {
-    console.log(` => Server Listening on ${HOST_NAME}:${PORT}`);
+server.listen(process.env.PORT, process.env.HOST, function() {
+    console.log(` => Server Listening on ${process.env.HOST}:${process.env.PORT}`);
 });
