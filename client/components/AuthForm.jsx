@@ -3,6 +3,7 @@ import AuthStore from 'stores/AuthStore';
 import AuthActions from 'actions/AuthActions';
 import connectToStores from 'alt/utils/connectToStores';
 import classnames from 'classnames';
+import TextBox from 'components/elements/TextBox';
 
 @connectToStores
 export default class AuthForm extends React.Component {
@@ -54,11 +55,11 @@ export default class AuthForm extends React.Component {
                                 <fieldset>
                                     <div className="pure-control-group">
                                         <label>Username</label>
-                                        <input name="username"/>
+                                        <TextBox name="username" type="text" />
                                     </div>
                                     <div className="pure-control-group">
                                         <label>Password</label>
-                                        <input name="password" type="password"/>
+                                        <TextBox name="password" type="password"/>
                                     </div>
                                     <div className="pure-controls">
                                         <label className="pure-checkbox">
