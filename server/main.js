@@ -8,11 +8,15 @@
 process.env.NODE_PATH = 'client';
 require('module').Module._initPaths(); // eslint-disable-line
 
+/*
 // Install `babel` hook for ES6
 require('babel/register')({
     stage: 0//,
     //plugins: ['typecheck']
 });
+*/
+
+//require.extensions['.css'] = function() { return null; }
 
 
 // Start the server

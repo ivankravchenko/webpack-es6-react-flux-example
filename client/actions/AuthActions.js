@@ -1,4 +1,4 @@
-import flux from 'flux';
+import flux from 'flux/flux';
 import AuthService from 'services/AuthService';
 
 class AuthActions {

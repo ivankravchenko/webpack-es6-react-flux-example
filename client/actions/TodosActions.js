@@ -1,4 +1,4 @@
-import flux from 'flux';
+import flux from 'flux/flux';
 
 let lastId = 0;
 

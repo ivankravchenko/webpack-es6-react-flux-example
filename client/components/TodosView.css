@@ -1,0 +1,8 @@
+.Todos-items li {
+    color: red;
+    background: blue;
+}
+
+.Todos-items li:before {
+    content: 'hi';
+}

@@ -3,14 +3,17 @@
 // 'hot loads' our javascript for super fast live reload in development
 const webpack = require('webpack');
 const WebpackDevServer = require('webpack-dev-server');
-const config = require('../webpack.config');
+const config = require('./webpack.client.js');
 const host = process.env.HOST || 'localhost';
 const port = process.env.HOT_LOAD_PORT || 8888;
+const path = require('path');
 
 new WebpackDevServer(webpack(config), {
-    contentBase: 'http://' + host + ':' + port,
+    //contentBase: 'http://' + host + ':' + port,
+    //publicPath: path.resolve(config.output.publicPath),
     publicPath: config.output.publicPath,
-    noInfo: true,
+    //noInfo: true,
+    progress: true,
     hot: true,
     inline: true,
     lazy: false,

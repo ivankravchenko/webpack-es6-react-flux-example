@@ -2,7 +2,10 @@ import React from 'react';
 import TodosStore from 'stores/TodosStore';
 import TodosActions from 'actions/TodosActions';
 import connectToStores from 'alt/utils/connectToStores';
+import styles from './TodosView.css';
+//import withStyles from 'decorators/withStyles';
 
+//@withStyles(styles)
 @connectToStores
 export default class TodosView extends React.Component {
     static propTypes = {
