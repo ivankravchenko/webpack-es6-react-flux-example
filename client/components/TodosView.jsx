@@ -2,6 +2,7 @@ import React from 'react';
 import TodosStore from 'stores/TodosStore';
 import TodosActions from 'actions/TodosActions';
 import connectToStores from 'alt/utils/connectToStores';
+import TextBox from 'components/elements/TextBox';
 
 @connectToStores
 export default class TodosView extends React.Component {
@@ -27,7 +28,7 @@ export default class TodosView extends React.Component {
             <div className="Todos">
             <h4>Proverbial Todo List Example:</h4>
                 <form className="Todos-newItemForm" onSubmit={this.onSubmitNewItemForm}>
-                    <input type="text" name="summary"/>
+                    <TextBox type="text" name="summary" />
                     <button>Add</button>
                 </form>
                 <ol className="Todos-items">
