@@ -10,7 +10,7 @@ import React from 'react';
 import routes from './routes';
 import Router from 'react-router';
 import compression from 'compression';
-import indexView from './views/index.hbs';
+import indexTemplate from './templates/index.hbs';
 // //import UAParser from 'ua-parser-js';
 
 
@@ -120,7 +120,7 @@ server.use(function(req, res, next) { // eslint-disable-line
     res.set('Content-Type', 'text/html');
 
 
-    const ssrPayload = indexView({
+    const ssrPayload = indexTemplate({
         body: content,
         script: '//dehydrated state would go here',
         title: 'MYACC-REACT',

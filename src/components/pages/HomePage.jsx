@@ -1,7 +1,7 @@
 import React from 'react';
 import {Link} from 'react-router';
-import TodosView from 'components/TodosView';
-import AuthForm from 'components/AuthForm';
+import TodosView from 'components/views/TodosView';
+import AuthView from 'components/views/AuthView';
 
 export default class HomePage extends React.Component {
     render() {
@@ -10,7 +10,7 @@ export default class HomePage extends React.Component {
                 Home &nbsp;
                 <Link to="about">About</Link>
 
-                <AuthForm/>
+                <AuthView/>
 
                 <TodosView/>
             </div>

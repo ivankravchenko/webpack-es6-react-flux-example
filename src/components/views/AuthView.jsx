@@ -6,7 +6,7 @@ import classnames from 'classnames';
 import TextBox from 'components/elements/TextBox';
 
 @connectToStores
-export default class AuthForm extends React.Component {
+export default class AuthView extends React.Component {
     static propTypes = {
         isWaiting: React.PropTypes.bool,
         isLoggedIn: React.PropTypes.bool,
