@@ -10,7 +10,7 @@
     "babel-runtime": "^5.8.20",
     "concurrently": "^0.1.1",
     "css-loader": "aluxian/css-loader",
-    "eslint": "^1.0.0",
+    "eslint": "1.0.0",
     "eslint-loader": "^0.14.2",
     "eslint-plugin-react": "^3.2.0",
     "extract-text-webpack-plugin": "^0.8.2",
@@ -19,6 +19,7 @@
     "jsdom": "3.1.2",
     "jsx-loader": "^0.13.2",
     "mocha": "^2.2.5",
+    "mocha-loader": "^0.7.1",
     "mockery": "^1.4.0",
     "path": "^0.11.14",
     "react-hot-loader": "^1.2.8",
@@ -30,6 +31,8 @@
     "webpack-error-notification": "^0.1.4"
   },
   "scripts": {
+    "babel-build": "rm -rf build && babel --out-dir build src",
+    "babel-watch": "rm -rf build && (babel --watch --out-dir build src &) && sleep 2",
     "lint": "./node_modules/.bin/eslint . --ext .js,.jsx; exit 0",
     "lint-watch": "nodemon --watch src --exec 'npm run lint'",
     "test": "./node_modules/.bin/mocha --recursive -c",
