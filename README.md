@@ -90,7 +90,6 @@ Depending on the needs of the app, as it grows in complexity, we may need to int
   - Views: /components/views/ProfileView.jsx
   - Elements: /components/elements/TextBox.jsx
   - Element Stylesheet: /components/elements/TextBox.css 
-- Favor ES6 syntax over traditional ES5 syntax.
 
  
  
