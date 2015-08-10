@@ -22,12 +22,12 @@ Proof of concept for a fully JS-based isomorphic modern stack, with the followin
 
 ## TODO
 
-- On a separate branch, server-side-rendering with CSS imports is working, however without hot-module-replacement. I'd like to merge these branches and get HMR working
+- (8/10/15) Got server-side-rendering with CSS imports and hot-module-replacement working, but now the tests need to be run through Webpack/bootstrapped slightly differently before they'll work again.
 - Need to persist the user's logged in state and store it on the server (can stub/fake a data-store for now by just persisting on the session)
 - Integrate [Passportjs](http://passportjs.org/) for authentication (also handles SSO)
 - Fully optimized production builds (vs staging and developer builds)
 - JS/JSX ESLinter is in place, need to also add CSSLint
-- Mocha testing is in place, would also like to add code coverage (e.g. [BlanketJS](http://blanketjs.org/))
+- Once Mocha testing is back in place, would also like to add code coverage (e.g. [BlanketJS](http://blanketjs.org/))
 - Automated E2E tests with [Nightwatch.js](http://nightwatchjs.org/)
 - API endpoints (either embedded in this repo or as a separate micro-service)
 - Create a Style Guide that enumerates all the different React components on one page to act as a library for developers to pull elements from and act as a living Style Guide for designers. Ideally, this Style Guide will be automatically created via some node script that can generate it on the fly.
