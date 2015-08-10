@@ -1,4 +1,4 @@
-# myacc-react
+# commerce-myaccount
 
 Proof of concept for a fully JS-based isomorphic modern stack, with the following technologies:
 
@@ -49,6 +49,8 @@ Proof of concept for a fully JS-based isomorphic modern stack, with the followin
 Once: `npm run test`
 
 Or, for TDD: `npm run watch-test`
+
+> *Testing is currently broken. Working on it!*
 
 ## Linting
  
