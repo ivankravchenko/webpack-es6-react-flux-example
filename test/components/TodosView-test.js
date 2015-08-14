@@ -1,4 +1,4 @@
-import TodosView from '../../src/components/views/TodosView.jsx';
+import TodosView from 'components/views/TodosView.jsx';
 
 describe('TodosView', () => {
     let renderedTodosView;

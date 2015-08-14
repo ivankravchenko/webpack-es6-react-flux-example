@@ -1,44 +1,73 @@
-//test/__bootstrap.js 
-//
-// (it's important that this file is first alphabetically
-// so that mocha process it first to bootstrap the rest of the tests)
-// Via: https://github.com/adjavaherian/mocha-react/blob/master/tests/bootstrap.js
 
-// globals
-global.assert = require('assert');
-process.env.NODE_PATH = 'client';
+import jsdom from 'jsdom';
+import assert from 'assert';
+
+console.log('(Bootstrapping Mocha Tests)');
+
+function setupFakeDOM() {
+    if (typeof document !== 'undefined') {
+        console.log('document is undefined');
+        // if the fake DOM has already been set up, or
+        // if running in a real browser, do nothing
+        return;
+    }
+
+    // setup the fake DOM environment.
+    //
+    // Note that we use the synchronous jsdom.jsdom() API
+    // instead of jsdom.env() because the 'document' and 'window'
+    // objects must be available when React is require()-d for
+    // the first time.
+    //
+    // For any async setup in tests, use
+    // the before() and beforeEach() hooks.
+    global.document = jsdom.jsdom('<html><body></body></html>');
+    global.window = document.defaultView; // document.parentWindow;
+    global.navigator = window.navigator;
+}
+
+function registerCompilers() {
+    var babel = require('babel-core');
+    var fs = require('fs');
+
+    // borrowed from https://github.com/babel/babel-jest/blob/master/index.js
+    require.extensions['.jsx'] = function (module, filename) {
+      var src = fs.readFileSync(filename, 'utf8');
+      // Allow the stage to be configured by an environment
+      // variable, but use Babel's default stage (2) if
+      // no environment variable is specified.
+      var stage = process.env.BABEL_JEST_STAGE || 2;
+
+      // Ignore all files within node_modules
+      if (filename.indexOf('node_modules') === -1 && babel.canCompile(filename)) {
+        var compiled = babel.transform(src, { filename: filename, stage: stage }).code;
+        return module._compile(compiled, filename);
+      }
+      return module;
+    };
+
+    require.extensions['.css'] = function () {
+      return null;
+    };
+};
+
+function setupGlobals() {
+    global.React = require('react/addons');
+    global.TestUtils = React.addons.TestUtils;
+    global.assert = require('assert');
+
+    // shared globals
+    global.assert = assert;
+    //global.jsdom = require('jsdom').jsdom('<!doctype html><html><body></body></html>');
+    global.TestUtils = React.addons.TestUtils;
+    global.mockery = require('mockery');
+};
+
+// To make test include paths relative to /src
+process.env.NODE_PATH = 'src';
 require('module').Module._initPaths();
-global.babel = require('babel/register')({stage:0});
-global.React = require('react/addons');
-global.jsdom = require('jsdom').jsdom('<!doctype html><html><body></body></html>');
-global.TestUtils = React.addons.TestUtils;
-global.mockery = require('mockery');
-global.document = jsdom;
-global.window = document.parentWindow;
-global.navigator = window.navigator;
-global.reactStub = require('react').createClass({render:function(){return null;}});
-global.reactStub = React.createClass({
-                        displayName: 'StubClass',
-                        render: function() {
-                            return null;
-                        }
-                    });
 
-// setup
-before(function(){
-    mockery.enable({
-        warnOnUnregistered: false
-    });
-});
-beforeEach(function(){
+setupFakeDOM();
+registerCompilers();
+setupGlobals();
 
-});
-
-// teardown
-afterEach(function() {
-    mockery.deregisterAll();    // Deregister all Mockery mocks from node's module cache
-});
-
-after(function(){
-    mockery.disable();
-});
