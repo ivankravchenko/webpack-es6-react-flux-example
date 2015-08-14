@@ -22,7 +22,7 @@ Proof of concept for a fully JS-based isomorphic modern stack, with the followin
 
 ## TODO
 
-- (8/10/15) Got server-side-rendering with CSS imports and hot-module-replacement working, but now the tests need to be run through Webpack/bootstrapped slightly differently before they'll work again.
+- ~~Got server-side-rendering with CSS imports and hot-module-replacement working, but now the tests need to be run through Webpack/bootstrapped slightly differently before they'll work again.~~ DONE
 - Need to persist the user's logged in state and store it on the server (can stub/fake a data-store for now by just persisting on the session)
 - Integrate [Passportjs](http://passportjs.org/) for authentication (also handles SSO)
 - Fully optimized production builds (vs staging and developer builds)
