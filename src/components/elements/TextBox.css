@@ -1,3 +1,5 @@
-.TextBox-input {
-    /* ... some styles here */
+.TextBox {
+    .TextBox-input {
+        border: 1px solid red;
+    }
 }

@@ -1,4 +1,6 @@
-.Todos-items li {
-    padding: 10px;
-    color: #777;
+.TodosView {
+    .Todos-items li {
+        padding: 10px;
+        color: #777;
+    }
 }

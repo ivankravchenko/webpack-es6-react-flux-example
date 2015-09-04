@@ -7,8 +7,8 @@ describe('TodosView', () => {
         renderedTodosView = TestUtils.renderIntoDocument(<TodosView />);
     });
 
-    it('renders div with Todos as a class', () => {
-        let todosDiv = TestUtils.findRenderedDOMComponentWithClass(renderedTodosView, 'Todos');
+    it('renders div with TodosView as a class', () => {
+        let todosDiv = TestUtils.findRenderedDOMComponentWithClass(renderedTodosView, 'TodosView');
         assert.ok(todosDiv,'Todos div rendered');
     });
 

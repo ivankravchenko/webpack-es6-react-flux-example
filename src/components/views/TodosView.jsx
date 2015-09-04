@@ -25,13 +25,13 @@ export default class TodosView extends React.Component {
 
     render() {
         return (
-            <div className="Todos">
+            <div className="TodosView">
             <h4>Proverbial Todo List Example:</h4>
-                <form className="Todos-newItemForm" onSubmit={this.onSubmitNewItemForm}>
+                <form className="TodosView-newItemForm" onSubmit={this.onSubmitNewItemForm}>
                     <input type="text" name="summary"/>
                     <button>Add</button>
                 </form>
-                <ol className="Todos-items">
+                <ol className="TodosView-items">
                     {this.props.items.map((item) => {
                         return (
                             <li data-id={item.id} key={item.id}>

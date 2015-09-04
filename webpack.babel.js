@@ -15,15 +15,20 @@ const GLOBALS = {
 };
 
 const CSS_LOADER = DEBUG ? 'css' : 'css?minimize';
-const CSS_LOADER_PARAMS = `modules&localIdentName=${DEBUG ? '[dir]--[local]--[sourceHash:5]' : '[sourceHash]&minimize'}`;
-
-/*const SASS_LOADER = 'sass?sourceMap&' + [
-  path.join(__dirname, 'src', 'sass'),
-  path.join(__dirname, 'node_modules'),
-  path.join(__dirname, 'node_modules', 'susy', 'sass'),
-  path.join(__dirname, 'node_modules', 'breakpoint-sass', 'stylesheets'),
-  path.join(__dirname, 'node_modules', 'loaders.css', 'src')
-].map(p => 'includePaths[]=' + p).join('&');*/
+/* @TODO:
+ -- see how necessary css?modules is
+ and how it plays with localIdentName  */
+const CSS_LOADER_PARAMS = `localIdentName=${DEBUG ? '[dir]--[local]--[sourceHash:5]' : '[sourceHash]&minimize'}`;
+const AUTOPREFIXER_BROWSERS = [
+  'Android 2.3',
+  'Android >= 4',
+  'Chrome >= 20',
+  'Firefox >= 24',
+  'Explorer >= 9',
+  'iOS >= 7',
+  'Opera >= 12',
+  'Safari >= 7'
+];
 
 // Common configuration for both client-side and server-side bundles
 const config = {
@@ -74,7 +79,13 @@ const config = {
             test: /\.ttf$/,
             loader: 'url'
         }]
-    }
+    },
+
+    postcss: [
+        require('postcss-nested')(),
+        require('cssnext')(),
+        require('autoprefixer-core')(AUTOPREFIXER_BROWSERS)
+    ]
 };
 
 // Configuration for the client-side bundle (app.js)
@@ -87,7 +98,7 @@ const appConfig = Object.assign({}, config, {
         filename: DEBUG ? 'bundle.js' : 'bundle.[hash].js'
     },
 
-    devtool: DEBUG ? 'cheap-eval-source-map' : false,
+    devtool: DEBUG ? 'cheap-module-eval-source-map' : false,
     plugins: config.plugins.concat(
         new webpack.DefinePlugin(Object.assign({}, GLOBALS, {
             __SERVER__: false
@@ -102,11 +113,8 @@ const appConfig = Object.assign({}, config, {
     module: Object.assign({}, config.module, {
         loaders: config.module.loaders.concat([{
             test: /\.css$/,
-            loader: DEBUG ? `style!${CSS_LOADER}` : ExtractTextPlugin.extract('style', CSS_LOADER)
-        }, {
-            test: /\.scss$/,
-            loader: DEBUG ? `style!css?${CSS_LOADER_PARAMS}&sourceMap` //!autoprefixer!${SASS_LOADER}`
-                : ExtractTextPlugin.extract('style', `css?${CSS_LOADER_PARAMS}&sourceMap`) //!autoprefixer!${SASS_LOADER}`)
+            loader: DEBUG ? `style!css?${CSS_LOADER_PARAMS}&sourceMap!postcss`//?${CSS_LOADER_PARAMS}&sourceMap`
+                : ExtractTextPlugin.extract('style', `css?${CSS_LOADER_PARAMS}&sourceMap!postcss`)
         }])
     })
 });
@@ -138,16 +146,13 @@ const serverConfig = Object.assign({}, config, {
         new webpack.DefinePlugin(Object.assign({}, GLOBALS, {
             __SERVER__: true
         })),
-        //new webpack.BannerPlugin('require("source-map-support").install();', { raw: true, entryOnly: false })
+        new webpack.BannerPlugin('require("source-map-support").install();', { raw: true, entryOnly: false })
     ),
 
     module: Object.assign({}, config.module, {
         loaders: config.module.loaders.concat([{
             test: /\.css$/,
-            loader: CSS_LOADER
-        }, {
-            test: /\.scss$/,
-            loader: `css/locals?${CSS_LOADER_PARAMS}` //!autoprefixer!${SASS_LOADER}`
+            loader: `css/locals?${CSS_LOADER_PARAMS}!postcss`
         }, {
             test: /\.hbs$/,
             loader: 'handlebars'
