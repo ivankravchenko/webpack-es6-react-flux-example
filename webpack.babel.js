@@ -87,7 +87,7 @@ const appConfig = Object.assign({}, config, {
         filename: DEBUG ? 'bundle.js' : 'bundle.[hash].js'
     },
 
-    devtool: DEBUG ? 'cheap-eval-source-map' : false,
+    devtool: DEBUG ? 'cheap-module-eval-source-map' : false,
     plugins: config.plugins.concat(
         new webpack.DefinePlugin(Object.assign({}, GLOBALS, {
             __SERVER__: false
