@@ -1,7 +1,7 @@
 import React from 'react';
 //import styles from './TextBox.css';
 
-class TextBox {
+class TextBox extends React.Component {
 
     static propTypes = {
         maxLines: React.PropTypes.number

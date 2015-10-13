@@ -1,15 +1,14 @@
 import React from 'react';
-import Router from 'react-router';
-const {Route, DefaultRoute, NotFoundRoute} = Router;
+import {Route, IndexRoute} from 'react-router';
 
 import HomePage from 'components/pages/HomePage';
 import AboutPage from 'components/pages/AboutPage';
 import NotFoundPage from 'components/pages/NotFoundPage';
 
 export default (
-    <Route>
-        <DefaultRoute name="home" handler={HomePage}/>
-        <Route name="about" handler={AboutPage}/>
-        <NotFoundRoute handler={NotFoundPage} />
+    <Route path="/">
+        <IndexRoute component={HomePage} />
+        <Route path="about" component={AboutPage} />
+        <Route path="*" component={NotFoundPage} />
     </Route>
 );

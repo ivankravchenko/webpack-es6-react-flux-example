@@ -53,6 +53,8 @@ Once: `npm run test`
 
 Or, for TDD: `npm run watch-test`
 
+> NOTE: Node v4 or higher is required to run tests (jsdom requirement). To install/use different versions of node, you can use [https://github.com/creationix/nvm](nvm) (or just update your system version).
+
 
 ## Linting
  

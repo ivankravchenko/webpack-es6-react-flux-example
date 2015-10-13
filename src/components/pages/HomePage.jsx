@@ -8,7 +8,7 @@ export default class HomePage extends React.Component {
         return (
             <div className="HomePage">
                 Home &nbsp;
-                <Link to="about">About</Link>
+                <Link to="/about" activeClassName="active">About</Link>
 
                 <AuthView/>
 

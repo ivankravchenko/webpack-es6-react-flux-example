@@ -1,10 +1,9 @@
 import 'purecss';
 
 import React from 'react';
+import ReactDOM from 'react-dom';
 import Router from 'react-router';
-
 import routes from 'routes';
+import {createHistory} from 'history';
 
-Router.run(routes, Router.HistoryLocation, (Root) => {
-    React.render(<Root/>, document.body);
-});
+ReactDOM.render((<Router history={createHistory()}>{routes}</Router>), document.getElementById('app'));

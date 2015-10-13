@@ -7,11 +7,26 @@ import express from 'express';
 import bodyParser from 'body-parser';
 //import cors from 'cors';
 import React from 'react';
+import ReactDOMServer from 'react-dom/server';
+
+import {match, RoutingContext} from 'react-router';
 import routes from './routes';
-import Router from 'react-router';
+
 import compression from 'compression';
 import indexTemplate from './templates/index.hbs';
 // //import UAParser from 'ua-parser-js';
+
+const generateSSRPayload = function(bodyContent, inlineCss) {
+    return indexTemplate({
+        body: bodyContent,
+        script: '//dehydrated state would go here',
+        title: 'SEG-REACT',
+        showPreloader: false, //this.path && this.path === '/',
+        jsBundle: assets.js || `http://${process.env.HOST}:${process.env.HMR_PORT}/bundle.js`,
+        cssBundle: assets.css || '',
+        inlineCss: inlineCss || ''
+    });
+};
 
 
 // //const Head = React.createFactory(require('./components/Head'));
@@ -82,31 +97,7 @@ server.use(function(req, res, next) { // eslint-disable-line
     } else {
     deviceType = ua.device.type;
     }*/
-    const deviceType = 'desktop'; // JG: For now
-
-    // We customize the onAbort method in order to handle redirects
-    const router = Router.create({
-        routes: routes,
-        location: req.path,
-        onAbort: function defaultAbortHandler(abortReason/*, location*/) {
-            if (abortReason && abortReason.to) {
-                res.redirect(301, abortReason.to);
-            } else {
-                res.redirect(404, '404');
-            }
-        }
-    });
-
-    let content = '';
-
-    // Run the router, and render the result to string
-    router.run((Handler, state) => {
-        content = React.renderToString(React.createElement(Handler, {
-            routerState: state,
-            deviceType: deviceType,
-            environment: 'server'
-        }), null);
-    });
+    //const deviceType = 'desktop'; // JG: For now
 
     // Resets the document title on each request
     // See https://github.com/gaearon/react-document-title#server-usage
@@ -119,18 +110,19 @@ server.use(function(req, res, next) { // eslint-disable-line
     // TODO: Get from Handlebars template
     res.set('Content-Type', 'text/html');
 
-
-    const ssrPayload = indexTemplate({
-        body: content,
-        script: '//dehydrated state would go here',
-        title: 'MYACC-REACT',
-        showPreloader: false, //this.path && this.path === '/',
-        jsBundle: assets.js || `http://${process.env.HOST}:${process.env.HMR_PORT}/bundle.js`,
-        cssBundle: assets.css || '',
-        inlineCss: '' //inlineCss || ''
+    // match the requested URL using react-router routes
+    match({routes, location: req.url}, (error, redirectLocation, renderProps) => {
+        if (error) {
+            res.status(500).send(error.message);
+        } else if (redirectLocation) {
+            res.redirect(302, redirectLocation.pathname + redirectLocation.search);
+        } else if (renderProps) {
+            const content = ReactDOMServer.renderToString(<RoutingContext {...renderProps} />);
+            res.status(200).end(generateSSRPayload(content));
+        } else {
+            res.status(404).send('Not Found. Sorry.');
+        }
     });
-
-    res.end(ssrPayload);
 });
 
 server.listen(process.env.PORT, process.env.HOST, () => {
