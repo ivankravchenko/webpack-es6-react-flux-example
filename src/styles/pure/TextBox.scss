@@ -1,0 +1,8 @@
+// TODO: Move this to be imported globally so not every file needs to import it
+@import 'common/variables';
+
+.TextBox {
+    &-input {
+        color: $text-color;
+    }
+}

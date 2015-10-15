@@ -14,16 +14,9 @@ const GLOBALS = {
     'process.env.HOST': process.env.HOST || '"localhost"'
 };
 
-const CSS_LOADER = DEBUG ? 'css' : 'css?minimize';
-const CSS_LOADER_PARAMS = `modules&localIdentName=${DEBUG ? '[dir]--[local]--[sourceHash:5]' : '[sourceHash]&minimize'}`;
-
-/*const SASS_LOADER = 'sass?sourceMap&' + [
-  path.join(__dirname, 'src', 'sass'),
-  path.join(__dirname, 'node_modules'),
-  path.join(__dirname, 'node_modules', 'susy', 'sass'),
-  path.join(__dirname, 'node_modules', 'breakpoint-sass', 'stylesheets'),
-  path.join(__dirname, 'node_modules', 'loaders.css', 'src')
-].map(p => 'includePaths[]=' + p).join('&');*/
+const CSS_LOADER = DEBUG ? 'css?sourceMap' : 'css?sourceMap&minimize';
+//const CSS_LOADER_PARAMS = `modules&localIdentName=${DEBUG ? '[dir]--[local]--[sourceHash:5]' : '[sourceHash]&minimize'}`;
+const SASS_LOADER = 'sass?sourceMap&includePaths[]=' + path.resolve(__dirname, './src/styles');
 
 // Common configuration for both client-side and server-side bundles
 const config = {
@@ -102,11 +95,12 @@ const appConfig = Object.assign({}, config, {
     module: Object.assign({}, config.module, {
         loaders: config.module.loaders.concat([{
             test: /\.css$/,
-            loader: DEBUG ? `style!${CSS_LOADER}` : ExtractTextPlugin.extract('style', CSS_LOADER)
+            loader: DEBUG ? `style!${CSS_LOADER}` 
+                    : ExtractTextPlugin.extract('style', CSS_LOADER)
         }, {
             test: /\.scss$/,
-            loader: DEBUG ? `style!css?${CSS_LOADER_PARAMS}&sourceMap` //!autoprefixer!${SASS_LOADER}`
-                : ExtractTextPlugin.extract('style', `css?${CSS_LOADER_PARAMS}&sourceMap`) //!autoprefixer!${SASS_LOADER}`)
+            loader: DEBUG ? `style!${CSS_LOADER}!autoprefixer!${SASS_LOADER}`
+                        : ExtractTextPlugin.extract('style', `${CSS_LOADER}!autoprefixer!${SASS_LOADER}`)
         }])
     })
 });
@@ -147,7 +141,7 @@ const serverConfig = Object.assign({}, config, {
             loader: CSS_LOADER
         }, {
             test: /\.scss$/,
-            loader: `css/locals?${CSS_LOADER_PARAMS}` //!autoprefixer!${SASS_LOADER}`
+            loader: `css/locals?sourceMap!autoprefixer!${SASS_LOADER}`
         }, {
             test: /\.hbs$/,
             loader: 'handlebars'
