@@ -198,6 +198,7 @@
     "space-unary-ops": [1, {"words": true, "nonwords": false}], // Require or disallow spaces before/after unary operators (words on by default, nonwords off by default)
     "spaced-comment": 0, // require or disallow a space immediately following the // in a line comment (off by default)
     "wrap-regex": 0, // require regex literals to be wrapped in parentheses (off by default)
+    "jsx-quotes": [2, "prefer-double"], // Enforce quote style for JSX attributes
 
     //
     // ECMAScript 6
@@ -223,7 +224,6 @@
     //
     // React specific linting rules for ESLint
     //
-    "react/jsx-quotes": [2, "double", "avoid-escape"], // Enforce quote style for JSX attributes
     "react/jsx-no-undef": 2, // Disallow undeclared variables in JSX
     "react/jsx-sort-props": 0, // Enforce props alphabetical sorting
     "react/jsx-uses-react": 2, // Prevent React to be incorrectly marked as unused
