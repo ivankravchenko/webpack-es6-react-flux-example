@@ -53,7 +53,7 @@ Once: `npm run test`
 
 Or, for TDD: `npm run watch-test`
 
-> NOTE: Node v4 or higher is required to run tests (jsdom requirement). To install/use different versions of node, you can use [https://github.com/creationix/nvm](nvm) (or just update your system version).
+> NOTE: Node v4 or higher is required to run tests (jsdom requirement). To install/use different versions of node, you can use [nvm](https://github.com/creationix/nvm) (or just update your system version).
 
 
 ## Linting
@@ -67,22 +67,30 @@ Can also watch: `npm run watch-lint`
 #### React Components
   - Favor composition over inheritence
   - Use decorators and [higher order components](https://medium.com/@dan_abramov/mixins-are-dead-long-live-higher-order-components-94a0d2f9e750)
-  - Each component should have its own stylesheet, named after the component, e.g. `TodosView.css`
+  - Each component should have its own stylesheet, named after the component, e.g. `TodosView.scss`
+  - By conventiuon, all stylesheets should be nested under a root classname that is the same as the JSX element it is styling.
   - All the class names in a component must come from the local stylesheet
   - To reuse styles, use mixins and define new classes in the local stylesheet
 
 #### Component Types
-There are 3 component types:
+There are 4 React component types:
 
 0. Pages
 1. Views
 2. Elements
+3. Pure (elements)
 
-> A **page** is composed of one or more **views**, and a view is composed of one or more **elements**. 
+> A **page** is composed of one or more **views**, and a view is composed of one or more **elements**.
 
 For example, the `<MemberCenterPage/>` may be composed of a `<NavigationView/>` and `<ProfileView/>`. The `<NavigationView/>` will be composed of a number of `<Link/>` elements.
 
 Depending on the needs of the app, as it grows in complexity, we may need to introduce other types (such as _layout_ components), but for now, we will strive to keep it simple.
+
+##### What's the difference between an _Element_ and a _Pure_ element?
+
+A _pure_ element can be used without it being aware of the context that it is rendered in and is useful wholly on its own. For example, a TextBox is a pure element. It can be used inside of the <Login/> view for both the username and password (just pass in the appropriate proptype to have the TextBox render as standard cleartext or password).
+
+The idea behind pure elements is that they can theoretically be extracted and put directly into any other React-based project and still be useful.
 
 ### General Conventions
 
@@ -92,8 +100,9 @@ Depending on the needs of the app, as it grows in complexity, we may need to int
 - Keep a generally flat folder structure. For example:
   - Pages: /components/pages/MemberCenterPage.jsx
   - Views: /components/views/ProfileView.jsx
-  - Elements: /components/elements/TextBox.jsx
-  - Element Stylesheet: /components/elements/TextBox.css 
+  - Elements: /components/elements/Link.jsx
+  - Pure Elements: /components/pure/TextBox.jsx
+  - Element Stylesheet: /styles/pure/TextBox.scss
 
  
  

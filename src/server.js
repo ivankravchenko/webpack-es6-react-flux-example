@@ -16,25 +16,11 @@ import compression from 'compression';
 import indexTemplate from './templates/index.hbs';
 // //import UAParser from 'ua-parser-js';
 
-const generateSSRPayload = function(bodyContent, inlineCss) {
-    return indexTemplate({
-        body: bodyContent,
-        script: '//dehydrated state would go here',
-        title: 'SEG-REACT',
-        showPreloader: false, //this.path && this.path === '/',
-        jsBundle: assets.js || `http://${process.env.HOST}:${process.env.HMR_PORT}/bundle.js`,
-        cssBundle: assets.css || '',
-        inlineCss: inlineCss || ''
-    });
-};
-
-
 // //const Head = React.createFactory(require('./components/Head'));
 // //const ReactDocumentTitle = require('react-document-title');
 
 // Setup the express server
 const server = express();
-
 let assets = {};
 
 if (!__DEV__) {
@@ -47,6 +33,18 @@ if (!__DEV__) {
         console.log('Assets: ', assets);
     });
 }
+
+const generateSSRPayload = function (bodyContent, inlineCss) {
+    return indexTemplate({
+        body: bodyContent,
+        script: '//dehydrated state would go here',
+        title: 'SEG-REACT',
+        showPreloader: false, //this.path && this.path === '/',
+        jsBundle: assets.js || `http://${process.env.HOST}:${process.env.HMR_PORT}/bundle.js`,
+        cssBundle: assets.css || '',
+        inlineCss: inlineCss || ''
+    });
+};
 
 // To accept POST requests
 server.use(bodyParser.json());

@@ -3,7 +3,7 @@ import AuthStore from 'stores/AuthStore';
 import AuthActions from 'actions/AuthActions';
 import connectToStores from 'alt/utils/connectToStores';
 import classnames from 'classnames';
-import TextBox from 'components/elements/TextBox';
+import TextBox from 'components/pure/TextBox';
 
 @connectToStores
 export default class AuthView extends React.Component {

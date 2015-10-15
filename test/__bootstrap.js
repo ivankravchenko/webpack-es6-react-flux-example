@@ -46,20 +46,17 @@ function registerCompilers() {
       return module;
     };
 
-    require.extensions['.css'] = function () {
+    // Don't process (S)CSS files
+    require.extensions['.css'] = require.extensions['.scss'] = function () {
       return null;
     };
 };
 
 function setupGlobals() {
-    global.React = require('react/addons');
-    global.TestUtils = React.addons.TestUtils;
+    global.React = require('react');
+    global.TestUtils = require('react-addons-test-utils');
     global.assert = require('assert');
-
-    // shared globals
-    global.assert = assert;
     //global.jsdom = require('jsdom').jsdom('<!doctype html><html><body></body></html>');
-    global.TestUtils = React.addons.TestUtils;
     global.mockery = require('mockery');
 };
 
