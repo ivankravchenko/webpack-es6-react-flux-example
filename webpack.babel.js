@@ -75,7 +75,7 @@ const appConfig = Object.assign({}, config, {
     entry: './src/app.js',
 
     output: {
-        path: '/dist/public',
+        path: './dist/public',
         publicPath: DEBUG ? `http://${GLOBALS['process.env.HOST'].replace(/\"/g, '')}:${GLOBALS['process.env.HMR_PORT']}/` : '',
         filename: DEBUG ? 'bundle.js' : 'bundle.[hash].js'
     },
