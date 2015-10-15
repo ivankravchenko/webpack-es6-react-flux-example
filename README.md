@@ -88,7 +88,7 @@ Depending on the needs of the app, as it grows in complexity, we may need to int
 
 ##### What's the difference between an _Element_ and a _Pure_ element?
 
-A _pure_ element can be used without it being aware of the context that it is rendered in and is useful wholly on its own. For example, a TextBox is a pure element. It can be used inside of the <Login/> view for both the username and password (just pass in the appropriate proptype to have the TextBox render as standard cleartext or password).
+A _pure_ element can be used without it being aware of the context that it is rendered in and is useful wholly on its own. For example, a TextBox is a pure element. It can be used inside of the `<Login/>` view for both the username and password (just pass in the appropriate proptype to have the TextBox render as standard cleartext or password).
 
 The idea behind pure elements is that they can theoretically be extracted and put directly into any other React-based project and still be useful.
 
