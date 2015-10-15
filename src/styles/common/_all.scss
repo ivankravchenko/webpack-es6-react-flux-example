@@ -1,0 +1,11 @@
+// common-import
+
+/**
+
+This file is to be imported by all SCSS files
+until we find a better way of globally/implicitly
+importing these shared SCSS files.
+
+**/
+
+@import 'variables';

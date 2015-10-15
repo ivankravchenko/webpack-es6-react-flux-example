@@ -51,23 +51,21 @@ export default class AuthView extends React.Component {
                     ) : (
                         <div>
                             {this.props.error ? <span>{this.props.error}</span> : <span></span>}
-                            <form ref="loginForm" onSubmit={this.onLoginSubmit} className="pure-form pure-form-aligned">
-                                <fieldset>
-                                    <div className="pure-control-group">
-                                        <label>Username</label>
-                                        <TextBox name="username" type="text" />
-                                    </div>
-                                    <div className="pure-control-group">
-                                        <label>Password</label>
-                                        <TextBox name="password" type="password"/>
-                                    </div>
-                                    <div className="pure-controls">
-                                        <label className="pure-checkbox">
-                                            <input name="remember" type="checkbox"/> remember me
-                                        </label>
-                                        <button type="submit" className="pure-button pure-button-primary">Login</button>
-                                    </div>
+                            <form ref="loginForm" onSubmit={this.onLoginSubmit} className="form-group">
+                                <fieldset className="form-group">
+                                    <label>Username</label>
+                                    <TextBox name="username" type="text" />
                                 </fieldset>
+                                <fieldset className="form-group">
+                                    <label>Password </label>
+                                    <TextBox name="password" type="password"/>
+                                </fieldset>
+                                <fieldset className="form-group">
+                                    <label>
+                                        <input name="remember" type="checkbox"/> remember me
+                                    </label>
+                                </fieldset>
+                                <button type="submit" className="btn btn-primary">Login</button>
                             </form>
                         </div>
                     )

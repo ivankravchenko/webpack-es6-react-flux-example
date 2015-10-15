@@ -1,5 +1,4 @@
-// TODO: Move this to be imported globally so not every file needs to import it
-@import 'common/variables';
+@import 'common/all';
 
 .TextBox {
     &-input {
