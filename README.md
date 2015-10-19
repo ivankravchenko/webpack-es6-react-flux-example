@@ -6,7 +6,7 @@ Proof of concept for a fully JS-based isomorphic modern stack, with the followin
 - [Alt](http://alt.js.org/) for a [Flux architecture](https://facebook.github.io/flux/docs/overview.html) with unidirectional data flow
 - [Express](http://koajs.com/) as the backend server for file serving and React pre-rendering
 - [webpack](http://webpack.github.io/) to compile and bundle everything together, hot reload included
-- [PostCSS](https://github.com/postcss/postcss) and [cssnext](http://cssnext.io/) with [Pure.css](http://purecss.io/) for a forward-thinking CSS solution
+- [SASS](http://sass-lang.com/) with [autoprefixer](https://github.com/postcss/autoprefixer) and [Bootstrap 4](http://v4-alpha.getbootstrap.com/) for a latest-and-greatest CSS solution
 - [Babel](https://babeljs.io/) for classy ES6/7+ code throughout
 - [Mocha](http://mochajs.org/) with [jsdom](https://www.npmjs.com/package/node-jsdom) for DOM-rendered Unit/Component tests
 - [ESLint](http://eslint.org/) and [CSSLint](https://github.com/CSSLint/csslint) for linting
