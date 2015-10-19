@@ -45,8 +45,6 @@ Proof of concept for a fully JS-based isomorphic modern stack, with the followin
 1. Build and start dev server: `npm run dev`
 2. Navigate to [http://localhost:8080](http://localhost:8080) to view the app.
 
-> NOTE: You also need `nodemon` installed globally. If you don't already have it (or if you're not sure), run: `npm install -g nodemon`.
-
 ## Testing
 
 Once: `npm run test`
