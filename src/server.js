@@ -30,7 +30,6 @@ if (!__DEV__) {
         }
 
         assets = JSON.parse(data).main;
-        console.log('Assets: ', assets);
     });
 }
 
@@ -123,6 +122,6 @@ server.use(function(req, res, next) { // eslint-disable-line
     });
 });
 
-server.listen(process.env.PORT, process.env.HOST, () => {
-    console.log(` => Server Listening on ${process.env.HOST}:${process.env.PORT}`);
+server.listen(process.env.PORT, () => {
+    console.log(` => Server Listening on PORT ${process.env.PORT}`);
 });
