@@ -1,13 +1,18 @@
 import React from 'react';
-import TodosStore from 'stores/TodosStore';
-import TodosActions from 'actions/TodosActions';
-import connectToStores from 'alt/utils/connectToStores';
-
 import 'styles/views/TodosView.scss';
 
-@connectToStores
+import {connect} from 'react-redux';
+import * as TodosActions from 'actions/TodosActions';
+
+@connect(
+    state => ({todos: state.todos}),
+    TodosActions
+)
 export default class TodosView extends React.Component {
     static propTypes = {
+        addTodo: React.PropTypes.func,
+        editTodo: React.PropTypes.func,
+        todos: React.PropTypes.any,
         items: React.PropTypes.arrayOf(
             React.PropTypes.shape({
                 id: React.PropTypes.number,
@@ -16,28 +21,28 @@ export default class TodosView extends React.Component {
             }))
     };
 
-    static getStores() {
-        return [TodosStore];
-    }
-
-    static getPropsFromStores() {
-        return TodosStore.getState();
-    }
-
     render() {
+        const {todos, addTodo, editTodo} = this.props;
+
         return (
             <div className="Todos">
             <h4>Proverbial Todo List Example:</h4>
-                <form className="Todos-newItemForm" onSubmit={this.onSubmitNewItemForm}>
+                <form className="Todos-newItemForm" onSubmit={(event) => {
+                    event.preventDefault();
+                    addTodo(event.target.summary.value);
+                    event.target.reset(); // blank the input box by resetting the form
+                }}>
                     <input type="text" name="summary"/>
                     <button>Add</button>
                 </form>
                 <ol className="Todos-items">
-                    {this.props.items.map((item) => {
+                    {todos.map((item, index) => {
                         return (
-                            <li data-id={item.id} key={item.id}>
+                            <li data-id={item.id} key={index}>
                                 <label>
-                                    <input type="checkbox" checked={item.done} onChange={this.onChangeDoneCheckbox}/>
+                                    <input type="checkbox" checked={item.done} onChange={() => {
+                                        editTodo(index, !item.done, item.summary);
+                                    }}/>
                                     &nbsp;
                                     <span>{item.summary}</span>
                                 </label>
@@ -47,19 +52,5 @@ export default class TodosView extends React.Component {
                 </ol>
             </div>
         );
-    }
-
-    onSubmitNewItemForm(event) {
-        event.preventDefault();
-
-        const form = event.target;
-        TodosActions.addItem(form.summary.value);
-        form.reset();
-    }
-
-    onChangeDoneCheckbox(event) {
-        TodosActions.updateItem(parseInt(event.target.parentElement.parentElement.attributes['data-id'].value), {
-            done: event.target.checked
-        });
     }
 }

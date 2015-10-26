@@ -1,19 +1,31 @@
 /* eslint-disable no-console, no-process-env */
 /*global __DEV__*/
 
+// general imports
 import fs from 'fs';
 import path from 'path';
+
+// server specific imports
 import express from 'express';
 import bodyParser from 'body-parser';
 //import cors from 'cors';
+import compression from 'compression';
+
+// React imports
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';
 
+// react-router imports
 import {match, RoutingContext} from 'react-router';
-import routes from './routes';
 
-import compression from 'compression';
+// redux imports
+import {Provider} from 'react-redux';
+
+// App imports
+import routes from './routes';
+import configureStore from './store/configureStore';
 import indexTemplate from './templates/index.hbs';
+
 // //import UAParser from 'ua-parser-js';
 
 // //const Head = React.createFactory(require('./components/Head'));
@@ -33,10 +45,10 @@ if (!__DEV__) {
     });
 }
 
-const generateSSRPayload = function (bodyContent, inlineCss) {
+const generateSSRPayload = function (bodyContent, initialState, inlineCss) {
     return indexTemplate({
         body: bodyContent,
-        script: '//dehydrated state would go here',
+        script: `window.__INITIAL_STATE__ = ${JSON.stringify(initialState)};`,
         title: 'SEG-REACT',
         showPreloader: false, //this.path && this.path === '/',
         jsBundle: assets.js || `http://${process.env.HOST}:${process.env.HMR_PORT}/bundle.js`,
@@ -80,6 +92,7 @@ server.use('/auth', (req, res) => {
 
 // Our handler for all incoming requests
 server.use(function(req, res, next) { // eslint-disable-line
+    const store = configureStore({todos:[]}); // for now
 
     // In order to handle "media queries" server-side (preventing FOUT), we parse the user agent string,
     // and pass a string down through the router that lets components style and render themselves
@@ -114,8 +127,13 @@ server.use(function(req, res, next) { // eslint-disable-line
         } else if (redirectLocation) {
             res.redirect(302, redirectLocation.pathname + redirectLocation.search);
         } else if (renderProps) {
-            const content = ReactDOMServer.renderToString(<RoutingContext {...renderProps} />);
-            res.status(200).end(generateSSRPayload(content));
+            const initialComponent = (
+                <Provider store={store}>
+                    <RoutingContext {...renderProps} />
+                </Provider>
+            );
+            const content = ReactDOMServer.renderToString(initialComponent);
+            res.status(200).end(generateSSRPayload(content, store.getState()));
         } else {
             res.status(404).send('Not Found. Sorry.');
         }

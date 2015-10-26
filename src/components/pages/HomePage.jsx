@@ -12,7 +12,7 @@ export default class HomePage extends React.Component {
 
                 <AuthView/>
 
-                <TodosView/>
+                <TodosView />
             </div>
         );
     }

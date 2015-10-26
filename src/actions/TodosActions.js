@@ -1,23 +1,26 @@
-import flux from 'flux/flux';
+export const ADD_TODO = 'ADD_TODO';
+export const EDIT_TODO = 'EDIT_TODO';
 
-let lastId = 0;
+// TODO: Use redux-actions to reduce this boilerplate
+// and to enforce FSA, https://github.com/acdlite/flux-standard-action
 
-class TodosActions {
-    addItem(summary) {
-        return {
-            id: ++lastId,
-            done: false,
-            summary: summary,
-            timestamp: new Date()
-        };
-    }
-
-    updateItem(id, updates) {
-        return {
-            id: id,
-            updates: updates
-        };
-    }
+export function addTodo(summary) {
+    return {
+        type: ADD_TODO,
+        payload: {
+            summary,
+            done: false
+        }
+    };
 }
 
-export default flux.createActions(TodosActions);
+export function editTodo(id, done, summary) {
+    return {
+        type: EDIT_TODO,
+        payload: {
+            id,
+            done,
+            summary
+        }
+    };
+}
